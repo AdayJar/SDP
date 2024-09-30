@@ -1,8 +1,12 @@
 import java.util.ArrayList;
 import java.util.List;
 
-//Class for all types
-abstract class BaseBook {
+//To print information
+interface BookInfo {
+    void printBookInfo();
+}
+
+abstract class BaseBook implements BookInfo {
     private String title;
     private String author;
 
@@ -19,10 +23,8 @@ abstract class BaseBook {
         return author;
     }
 
-    public abstract void printBookInfo(); 
 }
 
-//Class for paper books
 class Book extends BaseBook {
     private String isbn;
 
@@ -41,7 +43,6 @@ class Book extends BaseBook {
     }
 }
 
-//Class for ebooks
 class EBook extends BaseBook {
     private String fileFormat;
 
@@ -57,22 +58,22 @@ class EBook extends BaseBook {
 }
 
 class Library {
-    private List<BaseBook> books;
+    private List<BookInfo> books; 
 
     public Library() {
         this.books = new ArrayList<>();
     }
 
-    public void addBook(BaseBook book) {
+    public void addBook(BookInfo book) {
         books.add(book);
     }
 
-    public void removeBook(BaseBook book) {
+    public void removeBook(BookInfo book) {
         books.remove(book);
     }
 
     public void listBooks() {
-        for (BaseBook book : books) {
+        for (BookInfo book : books) {
             book.printBookInfo();
         }
     }
@@ -93,9 +94,9 @@ class LibraryService {
     public void addEBook(String title, String author, String fileFormat) {
         EBook newEBook = new EBook(title, author, fileFormat);
         library.addBook(newEBook);
-    } 
+    }
 
-    public void removeBook(BaseBook book) {
+    public void removeBook(BookInfo book) {
         library.removeBook(book);
     }
 
