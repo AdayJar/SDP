@@ -1,19 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 
-// Interface for printing book information
 interface BookInfo {
     void printBookInfo();
 }
-
-// Interface for the library
-interface LibraryInterface {
-    void addBook(BookInfo book);
-    void removeBook(BookInfo book);
-    void listBooks();
-}
-
-// Base class for all types of books
 abstract class BaseBook implements BookInfo {
     private String title;
     private String author;
@@ -31,8 +21,6 @@ abstract class BaseBook implements BookInfo {
         return author;
     }
 }
-
-// Class for physical books
 class Book extends BaseBook {
     private String isbn;
 
@@ -51,7 +39,6 @@ class Book extends BaseBook {
     }
 }
 
-// Class for eBooks
 class EBook extends BaseBook {
     private String fileFormat;
 
@@ -66,25 +53,21 @@ class EBook extends BaseBook {
     }
 }
 
-// Implementation of the library
-class Library implements LibraryInterface {
-    private List<BookInfo> books;
+class Library {
+    private List<BookInfo> books; 
 
     public Library() {
         this.books = new ArrayList<>();
     }
 
-    @Override
     public void addBook(BookInfo book) {
         books.add(book);
     }
 
-    @Override
     public void removeBook(BookInfo book) {
         books.remove(book);
     }
 
-    @Override
     public void listBooks() {
         for (BookInfo book : books) {
             book.printBookInfo();
@@ -92,11 +75,10 @@ class Library implements LibraryInterface {
     }
 }
 
-// Library service
 class LibraryService {
-    private LibraryInterface library; // Dependency is now on the interface
+    private Library library;
 
-    public LibraryService(LibraryInterface library) {
+    public LibraryService(Library library) {
         this.library = library;
     }
 
@@ -121,7 +103,7 @@ class LibraryService {
 
 public class Main1 {
     public static void main(String[] args) {
-        LibraryInterface library = new Library(); // Using the interface
+        Library library = new Library();
         LibraryService libraryService = new LibraryService(library);
 
         libraryService.addBook("1984", "George Orwell", "1234567890");
