@@ -1,32 +1,51 @@
 package src.com.librarysystem;
 
+import src.com.librarysystem.clients.Client;
 import src.com.librarysystem.exceptions.BookNotFoundException;
-import src.com.librarysystem.factory.SimpleBookFactory;
+import src.com.librarysystem.factory.ClientFactory;
+import src.com.librarysystem.factory.LibraryFactory;
+import src.com.librarysystem.magazines.Magazine;
 import src.com.librarysystem.manager.BookManager;
 import src.com.librarysystem.models.Book;
 import src.com.librarysystem.service.BookService;
 import java.time.LocalDate;
 import src.com.librarysystem.report.Report;
+import src.com.librarysystem.factory.AbstractFactory;
+
 
 public class Main {
     public static void main(String[] args) {
     
         BookManager bookManager = new BookManager();
-
-      
-        SimpleBookFactory bookFactory = new SimpleBookFactory();
-
     
         BookService bookService = new BookService(bookManager);
+        
+        //abstract factory
+        AbstractFactory libraryFactory = new LibraryFactory();
 
-    
-        Book physicalBook = bookFactory.createPhysicalBook(1, "Physical Book Title", "Author 1", 300, true);
-        Book eBook = bookFactory.createEBook(2, "EBook Title", "Author 2", 2.5, true);
-        Book audioBook = bookFactory.createAudioBook(3, "AudioBook Title", "Author 3", 5.0, true);
+        Book physicalBook = libraryFactory.createPhysicalBook(1, "Physical Book Title", "Author A", 300, true);
+        Book eBook = libraryFactory.createEBook(2, "E-Book Title", "Author B", 1.5, true);
+        Book audioBook = libraryFactory.createAudioBook(3, "AudioBook Title", "Author 3", 5.0, true);
+        Magazine monthlyMagazine = libraryFactory.createMonthlyMagazine(3, "Monthly Magazine Title", "Editor A", true, 10);
+        Magazine weeklyMagazine = libraryFactory.createWeeklyMagazine(4, "Weekly Magazine Title", "Editor B", true, "Week 40");
+        
+        System.out.println("\n=============================\n");
 
-        bookManager.addBook(physicalBook);
-        bookManager.addBook(eBook);
-        bookManager.addBook(audioBook);
+        System.out.println(physicalBook.showInfo());
+        System.out.println(eBook.showInfo());
+        System.out.println(audioBook.showInfo());
+        System.out.println(monthlyMagazine.showInfo());
+        System.out.println(weeklyMagazine.showInfo());
+
+        Client regularClient = ClientFactory.createRegularClient(1, "Akhmetova Dilyara", "akhmetova_dilyara@gmail.com");
+        Client premiumClient1 = ClientFactory.createPremiumClient(2, "Beisembay Umitzhan", "beisembay_umitzhan@gmail.com", 0.1);
+        Client premiumClient2 = ClientFactory.createPremiumClient(3, "Mustafa Akerke", "mustafa_akerke@gmail.com", 0.05);
+
+        System.out.println("\n=============================\n");
+
+        System.out.println(regularClient);
+        System.out.println(premiumClient1);
+        System.out.println(premiumClient2);
 
         System.out.println("\n=============================\n");
         // Builder
