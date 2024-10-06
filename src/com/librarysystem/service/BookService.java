@@ -5,14 +5,14 @@ import src.com.librarysystem.manager.BookManager;
 import src.com.librarysystem.models.Book;
 
 public class BookService {
-    private final BookManager bookManager; // Ссылка на BookManager
+    private final BookManager bookManager; 
 
-    // Конструктор, который принимает BookManager для работы с книгами
+    
     public BookService(BookManager bookManager) {
         this.bookManager = bookManager;
     }
 
-    // Метод для проверки доступности книги по ID
+    
     public boolean isBookAvailable(int id) throws BookNotFoundException {
         Book book = bookManager.findBookById(id);
         if (book == null) {

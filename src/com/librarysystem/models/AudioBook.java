@@ -46,7 +46,7 @@ public class AudioBook implements Book {
 
     public void reserve() {
         if (available) {
-            available = false; // Забронировать книгу
+            available = false; 
             System.out.println("Book " + title + " has been reserved.");
         } else {
             System.out.println("Book " + title + " is not available for reservation.");
@@ -55,7 +55,7 @@ public class AudioBook implements Book {
 
     @Override
     public void cancelReservation() {
-        available = true; // Отмена бронирования
+        available = true; 
         System.out.println("Reservation for book " + title + " has been cancelled.");
     }
 }
