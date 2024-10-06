@@ -1,5 +1,7 @@
 package src.com.librarysystem.models;
 
+import src.com.librarysystem.manager.BookManager;
+
 public class EBook implements Book {
     private int id;
     private String title;
@@ -14,6 +16,11 @@ public class EBook implements Book {
         this.author = author;
         this.sizeMB = sizeMB;
         this.available = available;
+    }
+    
+    @Override
+    public Book clone() {
+        return new EBook(id, title, author, sizeMB, available);
     }
 
     @Override
@@ -37,8 +44,9 @@ public class EBook implements Book {
     }
 
     @Override
-    public String showInfo() {
-        return "E-Book - Title: " + title + ", Author: " + author + ", Size: " + sizeMB + " MB, Available: " + available;
+   public String showInfo() {
+        return "Physical Book ID: " + id + ", Title: " + title + ", Author: " + author + ", sizeMB: " + sizeMB +
+                ", Available: " + available;
     }
 
     // Реализация методов бронирования
@@ -57,4 +65,12 @@ public class EBook implements Book {
         available = true; // Отмена бронирования
         System.out.println("Reservation for E-Book " + title + " has been cancelled.");
     }
+
+    
+   public void changeAvailability(boolean availability) {
+        this.available = availability; 
+        String status = availability ? "available" : "not available";
+        System.out.println("Book " + title + " is now " + status + ".");
+   }
+
 }

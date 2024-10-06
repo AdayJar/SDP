@@ -30,6 +30,10 @@ public class BookManager {
         return books;
     }
 
+    public int getTotalBooks() {
+        return books.size();
+    }
+
     public Book findBookById(int id) {
         return books.stream()
                     .filter(book -> book.getId() == id)

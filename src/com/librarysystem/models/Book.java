@@ -7,7 +7,8 @@ public interface Book {
     boolean isAvailable();
     String showInfo();
 
-
     void reserve();
     void cancelReservation();
+    void changeAvailability(boolean availability);
+    Book clone(); 
 }

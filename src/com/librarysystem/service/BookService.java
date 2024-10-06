@@ -21,7 +21,7 @@ public class BookService {
         return book.isAvailable();
     }
 
-    // Метод для бронирования книги
+
     public void reserveBook(int id) throws BookNotFoundException {
         Book book = bookManager.findBookById(id);
         if (book == null) {
@@ -30,7 +30,7 @@ public class BookService {
         book.reserve();
     }
 
-    // Метод для отмены бронирования книги
+  
     public void cancelReservation(int id) throws BookNotFoundException {
         Book book = bookManager.findBookById(id);
         if (book == null) {
@@ -38,4 +38,15 @@ public class BookService {
         }
         book.cancelReservation();
     }
+
+
+   
+    public void changeAvailability(int id, boolean availability) throws BookNotFoundException {
+       Book book = bookManager.findBookById(id);
+       if (book == null) {
+          throw new BookNotFoundException("Book with ID " + id + " not found.");
+       }
+       book.changeAvailability(availability); 
+    }
+
 }

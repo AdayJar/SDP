@@ -1,5 +1,7 @@
 package src.com.librarysystem.models;
 
+import src.com.librarysystem.manager.BookManager;
+
 public class AudioBook implements Book {
     private final int id;
     private final String title;
@@ -13,6 +15,11 @@ public class AudioBook implements Book {
         this.author = author;
         this.duration = duration;
         this.available = available;
+    }
+
+    @Override
+    public Book clone() {
+        return new AudioBook(id, title, author, duration, available);
     }
 
     @Override
@@ -37,12 +44,11 @@ public class AudioBook implements Book {
 
     @Override
     public String showInfo() {
-        return "Audio Book: ID=" + id + ", Title='" + title + "', Author='" + author + "', Duration=" + duration + " hours, Available=" + available;
+        return "Physical Book ID: " + id + ", Title: " + title + ", Author: " + author + ", Duration: " + duration +
+                ", Available: " + available ;
     }
 
-    public void listen() {
-        System.out.println("Listening to " + title);
-    }
+
 
     public void reserve() {
         if (available) {
@@ -58,4 +64,12 @@ public class AudioBook implements Book {
         available = true; 
         System.out.println("Reservation for book " + title + " has been cancelled.");
     }
+
+ 
+    public void changeAvailability(boolean availability) {
+       this.available = availability; 
+       String status = availability ? "available" : "not available";
+       System.out.println("Book " + title + " is now " + status + ".");
+    }
+
 }

@@ -1,5 +1,7 @@
 package src.com.librarysystem.models;
 
+import src.com.librarysystem.manager.BookManager;
+
 public class PhysicalBook implements Book {
     private int id;
     private String title;
@@ -14,6 +16,11 @@ public class PhysicalBook implements Book {
         this.author = author;
         this.pages = pages;
         this.available = available;
+    }
+    
+    @Override
+    public Book clone() {
+        return new PhysicalBook(id, title, author, pages, available);
     }
 
     @Override
@@ -37,8 +44,9 @@ public class PhysicalBook implements Book {
     }
 
     @Override
-    public String showInfo() {
-        return "Physical Book - Title: " + title + ", Author: " + author + ", Pages: " + pages + ", Available: " + available;
+   public String showInfo() {
+        return "Physical Book ID: " + id + ", Title: " + title + ", Author: " + author + ", Pages: " + pages +
+                ", Available: " + available ;
     }
 
 
@@ -57,4 +65,13 @@ public class PhysicalBook implements Book {
         available = true; 
         System.out.println("Reservation for book " + title + " has been cancelled.");
     }
+
+    
+    public void changeAvailability(boolean availability) {
+       this.available = availability; 
+       String status = availability ? "available" : "not available";
+       System.out.println("Book " + title + " is now " + status + ".");
+    }
+
+   
 }
