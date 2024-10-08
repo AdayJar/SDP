@@ -1,16 +1,18 @@
-package SDP.src.com.librarysystem.service;
+package src.com.librarysystem.service;
 
-import SDP.src.com.librarysystem.exceptions.BookNotFoundException;
-import SDP.src.com.librarysystem.manager.BookManager;
-import SDP.src.com.librarysystem.models.Book;
+import src.com.librarysystem.exceptions.BookNotFoundException; // Import exception for when a book is not found
+import src.com.librarysystem.manager.BookManager; // Import book manager
+import src.com.librarysystem.models.Book; // Import book model
 
 public class BookService {
-    private final BookManager bookManager; // Ссылка на BookManager
+    private final BookManager bookManager; // Manager for handling books
 
-    // Конструктор, который принимает BookManager для работы с книгами
+    // Constructor for initializing BookManager
+
     public BookService(BookManager bookManager) {
         this.bookManager = bookManager;
     }
+
 
     // Метод для проверки доступности книги по ID
     public boolean isBookAvailable(int id) throws BookNotFoundException {
@@ -38,4 +40,53 @@ public class BookService {
         }
         book.cancelReservation();
     }
+
+    // Method to check the availability of a book by its ID
+    public boolean isBookAvailable(int id) throws BookNotFoundException {
+        // Find the book by its ID
+        Book book = bookManager.findBookById(id);
+        // Check if the book exists
+        if (book == null) {
+            throw new BookNotFoundException("Book with ID " + id + " not found."); // Throw exception if the book is not found
+        }
+        // Return the availability of the book
+        return book.isAvailable();
+    }
+
+    // Method to reserve a book by its ID
+    public void reserveBook(int id) throws BookNotFoundException {
+        // Find the book by its ID
+        Book book = bookManager.findBookById(id);
+        // Check if the book exists
+        if (book == null) {
+            throw new BookNotFoundException("Book with ID " + id + " not found."); // Throw exception if the book is not found
+        }
+        // Reserve the book
+        book.reserve();
+    }
+
+    // Method to cancel the reservation of a book by its ID
+    public void cancelReservation(int id) throws BookNotFoundException {
+        // Find the book by its ID
+        Book book = bookManager.findBookById(id);
+        // Check if the book exists
+        if (book == null) {
+            throw new BookNotFoundException("Book with ID " + id + " not found."); // Throw exception if the book is not found
+        }
+        // Cancel the reservation of the book
+        book.cancelReservation();
+    }
+
+    // Method to change the availability of a book by its ID
+    public void changeAvailability(int id, boolean availability) throws BookNotFoundException {
+        // Find the book by its ID
+        Book book = bookManager.findBookById(id);
+        // Check if the book exists
+        if (book == null) {
+            throw new BookNotFoundException("Book with ID " + id + " not found."); // Throw exception if the book is not found
+        }
+        // Change the availability status of the book
+        book.changeAvailability(availability);
+    }
+
 }
