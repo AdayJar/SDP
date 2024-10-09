@@ -1,4 +1,4 @@
-package src.com.librarysystem.models;
+package src.com.librarysystem.models.book;
 
 import src.com.librarysystem.manager.BookManager;
 
@@ -16,6 +16,7 @@ public class AudioBook implements Book {
     private boolean available;
 
     // Constructor to initialize an AudioBook instance
+
     public AudioBook(int id, String title, String author, double duration, boolean available) {
         this.id = id;
         this.title = title;
@@ -24,6 +25,7 @@ public class AudioBook implements Book {
         this.available = available;
     }
 
+
     // Creates a clone of the current AudioBook instance
     @Override
     public Book clone() {
@@ -31,28 +33,37 @@ public class AudioBook implements Book {
     }
 
     // Gets the unique ID of the audiobook
+
     @Override
     public int getId() {
         return id;
     }
 
     // Gets the title of the audiobook
+
     @Override
     public String getTitle() {
         return title;
     }
 
+
     // Gets the author of the audiobook
+
     @Override
     public String getAuthor() {
         return author;
     }
 
+
     // Checks if the audiobook is available for borrowing
+
     @Override
     public boolean isAvailable() {
         return available;
     }
+
+
+  
 
     // Returns a string representation of the audiobook's information
     @Override
@@ -83,5 +94,6 @@ public class AudioBook implements Book {
         this.available = availability; 
         String status = availability ? "available" : "not available";
         System.out.println("Audiobook " + title + " is now " + status + ".");
+
     }
 }

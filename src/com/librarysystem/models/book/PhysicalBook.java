@@ -1,4 +1,4 @@
-package src.com.librarysystem.models;
+package src.com.librarysystem.models.book;
 
 import src.com.librarysystem.manager.BookManager; // Import book manager interface
 
@@ -10,6 +10,7 @@ public class PhysicalBook implements Book { // PhysicalBook implements the Book 
     private boolean available; // Availability status of the book
 
     // Constructor for initializing PhysicalBook attributes
+
     public PhysicalBook(int id, String title, String author, int pages, boolean available) {
         this.id = id;
         this.title = title;
@@ -18,6 +19,7 @@ public class PhysicalBook implements Book { // PhysicalBook implements the Book 
         this.available = available;
     }
 
+
     // Method to create a clone of the PhysicalBook
     @Override
     public Book clone() {
@@ -25,29 +27,33 @@ public class PhysicalBook implements Book { // PhysicalBook implements the Book 
     }
 
     // Getter for book ID
+
     @Override
     public int getId() {
         return id;
     }
 
+
     // Getter for book title
+
     @Override
     public String getTitle() {
         return title;
     }
 
-    // Getter for book author
     @Override
     public String getAuthor() {
         return author;
     }
 
-    // Method to check if the book is available
+
     @Override
     public boolean isAvailable() {
         return available;
     }
 
+
+   
     // Method to show book information
     @Override
     public String showInfo() {
@@ -60,11 +66,14 @@ public class PhysicalBook implements Book { // PhysicalBook implements the Book 
     public void reserve() {
         if (available) { // Check if the book is available for reservation
             available = false; // Mark the book as not available
+
             System.out.println("Book " + title + " has been reserved.");
         } else {
             System.out.println("Book " + title + " is not available for reservation.");
         }
     }
+
+  
 
     // Method to cancel the reservation of the book
     @Override
@@ -79,4 +88,5 @@ public class PhysicalBook implements Book { // PhysicalBook implements the Book 
         String status = availability ? "available" : "not available"; // Determine status message
         System.out.println("Book " + title + " is now " + status + ".");
     }
+
 }

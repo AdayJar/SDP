@@ -1,15 +1,16 @@
 package src.com.librarysystem.manager;
 
-import src.com.librarysystem.models.Book;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import src.com.librarysystem.models.book.Book;
 
 // The BookManager class is responsible for managing the collection of books in the library system.
 // It follows the Singleton design pattern to ensure that only one instance of the BookManager exists.
 public class BookManager {
     private static BookManager instance; // Singleton instance
-    private List<Book> books = new ArrayList<>(); // List to store books
+    private List<Book> books = new ArrayList<>();
+     // List to store books
 
     // Private constructor prevents instantiation from outside this class
     private BookManager() {

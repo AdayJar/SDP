@@ -1,4 +1,4 @@
-package src.com.librarysystem.factory;
+package src.com.librarysystem.factory.clientFactory;
 
 import src.com.librarysystem.clients.Client;
 import src.com.librarysystem.clients.RegularClient;

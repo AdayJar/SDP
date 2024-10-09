@@ -38,7 +38,7 @@ public class PremiumClient implements Client {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", discount=" + discount +
+                ", discount=" + discount + "%" +
                 '}';
     }
 }

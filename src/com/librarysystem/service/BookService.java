@@ -2,7 +2,7 @@ package src.com.librarysystem.service;
 
 import src.com.librarysystem.exceptions.BookNotFoundException; // Import exception for when a book is not found
 import src.com.librarysystem.manager.BookManager; // Import book manager
-import src.com.librarysystem.models.Book; // Import book model
+import src.com.librarysystem.models.book.Book;
 
 public class BookService {
     private final BookManager bookManager; // Manager for handling books

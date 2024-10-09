@@ -1,15 +1,16 @@
-package src.com.librarysystem.factory;
+package src.com.librarysystem.factory.bookAbstractFactory;
 
-import src.com.librarysystem.models.Book;
-import src.com.librarysystem.models.AudioBook;
-import src.com.librarysystem.models.EBook;
-import src.com.librarysystem.models.PhysicalBook;
-import src.com.librarysystem.magazines.Magazine;
-import src.com.librarysystem.magazines.MonthlyMagazine;
-import src.com.librarysystem.magazines.WeeklyMagazine;
+import src.com.librarysystem.models.book.AudioBook;
+import src.com.librarysystem.models.book.Book;
+import src.com.librarysystem.models.book.EBook;
+import src.com.librarysystem.models.book.PhysicalBook;
+import src.com.librarysystem.models.magazine.Magazine;
+import src.com.librarysystem.models.magazine.MonthlyMagazine;
+import src.com.librarysystem.models.magazine.WeeklyMagazine;
 
 public class LibraryFactory implements AbstractFactory {
     
+    // Создание книг
     @Override
     public Book createPhysicalBook(int id, String title, String author, int pages, boolean available) {
         return new PhysicalBook(id, title, author, pages, available);
@@ -25,6 +26,7 @@ public class LibraryFactory implements AbstractFactory {
         return new AudioBook(id, title, author, duration, available);
     }
 
+    // Создание журналов
     @Override
     public Magazine createMonthlyMagazine(int id, String title, String editor, boolean available, int issueNumber) {
         return new MonthlyMagazine(id, title, editor, available, issueNumber);

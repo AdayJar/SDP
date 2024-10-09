@@ -1,4 +1,4 @@
-package src.com.librarysystem.models;
+package src.com.librarysystem.models.book;
 
 // The Book interface defines the contract for book-related functionalities in the library system.
 public interface Book {

@@ -1,4 +1,4 @@
-package src.com.librarysystem.magazines;
+package src.com.librarysystem.models.magazine;
 
 public interface Magazine {
     int getId();

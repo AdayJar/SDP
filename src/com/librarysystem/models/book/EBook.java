@@ -1,4 +1,4 @@
-package src.com.librarysystem.models;
+package src.com.librarysystem.models.book;
 
 import src.com.librarysystem.manager.BookManager; // Import book manager interface
 

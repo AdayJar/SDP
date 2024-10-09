@@ -1,18 +1,18 @@
-package src.com.librarysystem.magazines;
+package src.com.librarysystem.models.magazine;
 
-public class WeeklyMagazine implements Magazine {
+public class MonthlyMagazine implements Magazine {
     private int id;
     private String title;
     private String editor;
     private boolean available;
-    private String weekOfPublication;
+    private int issueNumber;
 
-    public WeeklyMagazine(int id, String title, String editor, boolean available, String weekOfPublication) {
+    public MonthlyMagazine(int id, String title, String editor, boolean available, int issueNumber) {
         this.id = id;
         this.title = title;
         this.editor = editor;
         this.available = available;
-        this.weekOfPublication = weekOfPublication;
+        this.issueNumber = issueNumber;
     }
 
     @Override
@@ -53,6 +53,6 @@ public class WeeklyMagazine implements Magazine {
 
     @Override
     public String showInfo() {
-        return "ID: " + id + ", Title: " + title + ", Editor: " + editor + ", Available: " + available + ", Week of Publication: " + weekOfPublication;
+        return "ID: " + id + ", Title: " + title + ", Editor: " + editor + ", Available: " + available + ", Issue Number: " + issueNumber;
     }
 }
