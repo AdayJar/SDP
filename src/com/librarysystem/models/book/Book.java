@@ -10,6 +10,8 @@ public interface Book {
     
     // Method to get the author of the book
     String getAuthor();
+
+   
     
     // Method to check if the book is currently available for borrowing
     boolean isAvailable();
