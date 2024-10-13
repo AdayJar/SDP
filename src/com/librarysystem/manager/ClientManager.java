@@ -5,52 +5,52 @@ import java.util.Map;
 import src.com.librarysystem.iterator.ClientIterator;
 import src.com.librarysystem.models.clients.Client;
 
-// Менеджер для управления клиентами
+// Manager for managing clients
 public class ClientManager {
-    private static ClientManager instance; // Статическая переменная для хранения единственного экземпляра ClientManager
-    private Map<Integer, Client> clients = new HashMap<>(); // Коллекция для хранения клиентов с их идентификаторами
+    private static ClientManager instance; // Static variable to hold the singleton instance of ClientManager
+    private Map<Integer, Client> clients = new HashMap<>(); // Collection to store clients with their IDs
 
-    // Приватный конструктор для предотвращения создания объектов извне (Singleton)
+    // Private constructor to prevent object creation from outside (Singleton)
     private ClientManager() {
     }
 
-    // Метод для получения единственного экземпляра ClientManager
+    // Method to get the singleton instance of ClientManager
     public static synchronized ClientManager getInstance() {
         if (instance == null) {
-            instance = new ClientManager(); // Создаем новый экземпляр, если он не существует
+            instance = new ClientManager(); // Create a new instance if it does not exist
         }
-        return instance; // Возвращаем единственный экземпляр
+        return instance; // Return the singleton instance
     }
 
-    // Метод для добавления клиента
+    // Method to add a client
     public void addClient(Client client) {
         clients.put(client.getId(), client);
         System.out.println("Client added: " + client);
     }
 
-    // Метод для поиска клиента по идентификатору
+    // Method to find a client by ID
     public Client findClientById(int id) {
         return clients.get(id);
     }
 
-    // Метод для удаления клиента по идентификатору
+    // Method to remove a client by ID
     public void removeClient(int id) {
         clients.remove(id);
         System.out.println("Client with ID " + id + " has been removed.");
     }
 
-    // Метод для получения общего количества клиентов
+    // Method to get the total number of clients
     public int getTotalClients() {
         return clients.size();
     }
 
-    // Метод для получения карты клиентов
+    // Method to get the map of clients
     public Map<Integer, Client> getClientsMap() {
         return clients;
     }
 
-    // Метод для создания итератора клиентов
+    // Method to create a client iterator
     public ClientIterator createIterator() {
-        return new ClientIterator(this); // Возвращаем новый экземпляр итератора клиентов
+        return new ClientIterator(this); // Return a new instance of the client iterator
     }
 }

@@ -6,27 +6,27 @@ import src.com.librarysystem.models.clients.Client;
 import java.util.Iterator;
 import java.util.Map;
 
-// Итератор для класса ClientManager
+// Iterator for the ClientManager class
 public class ClientIterator implements Iterator<Client> {
-    private Iterator<Map.Entry<Integer, Client>> iterator; // Итератор для хэш-карты
+    private Iterator<Map.Entry<Integer, Client>> iterator; // Iterator for the hash map
 
-    // Конструктор принимает ClientManager
+    // Constructor accepts ClientManager
     public ClientIterator(ClientManager clientManager) {
-        this.iterator = clientManager.getClientsMap().entrySet().iterator(); // Инициализация итератора для хэш-карты
+        this.iterator = clientManager.getClientsMap().entrySet().iterator(); // Initialize the iterator for the hash map
     }
 
-    // Проверяет, есть ли следующий клиент
+    // Checks if there is a next client
     @Override
     public boolean hasNext() {
         return iterator.hasNext();
     }
 
-    // Возвращает следующего клиента
+    // Returns the next client
     @Override
     public Client next() {
         if (!hasNext()) {
-            throw new  IndexOutOfBoundsException("No more clients available."); 
+            throw new IndexOutOfBoundsException("No more clients available."); 
         }
-        return iterator.next().getValue(); // Получаем клиента из записи
+        return iterator.next().getValue(); // Get the client from the entry
     }
 }

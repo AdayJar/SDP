@@ -3,29 +3,29 @@ package src.com.librarysystem.iterator;
 import src.com.librarysystem.manager.BookManager;
 import src.com.librarysystem.models.book.Book;
 
-// Итератор для класса BookManager
+// Iterator for the BookManager class
 public class BookIterator implements Iterator<Book> {
-    private BookManager bookManager; // Ссылка на менеджер книг
-    private int currentIndex = 0; // Текущий индекс для итерации
+    private BookManager bookManager; // Reference to the BookManager
+    private int currentIndex = 0; // Current index for iteration
 
-    // Конструктор принимает BookManager
+    // Constructor accepts BookManager
     public BookIterator(BookManager bookManager) {
         this.bookManager = bookManager;
     }
 
-    // Проверяет, есть ли следующая книга
+    // Checks if there is a next book
     @Override
     public boolean hasNext() {
         return currentIndex < bookManager.getTotalBooks();
     }
 
-    // Возвращает следующую книгу
+    // Returns the next book
     @Override
     public Book next() {
         if (!hasNext()) {
             throw new IndexOutOfBoundsException("No more books available.");
         }
-        Book book = bookManager.getAllBooks().get(currentIndex); // Получаем книгу по индексу
+        Book book = bookManager.getAllBooks().get(currentIndex); // Get the book by index
         currentIndex++;
         return book;
     }
