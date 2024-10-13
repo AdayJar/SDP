@@ -1,138 +1,44 @@
 package src.com.librarysystem;
 
-import src.com.librarysystem.exceptions.BookNotFoundException;
-import src.com.librarysystem.exceptions.ClientNotFoundException;
-import src.com.librarysystem.factory.bookAbstractFactory.AbstractFactory;
-import src.com.librarysystem.factory.bookAbstractFactory.LibraryFactory;
-import src.com.librarysystem.factory.clientFactory.ClientFactory;
-import src.com.librarysystem.manager.BookManager;
-import src.com.librarysystem.manager.ClientManager;
-import src.com.librarysystem.models.book.Book;
-import src.com.librarysystem.models.clients.Client;
-import src.com.librarysystem.models.magazine.Magazine;
-import src.com.librarysystem.service.BookService;
-import src.com.librarysystem.service.ClientService;
-import src.com.librarysystem.report.Report;
-import src.com.librarysystem.state.BookContext;
-import java.time.LocalDate;
-import java.util.Iterator;
+import src.com.librarysystem.manager.MagazineManager;
+import src.com.librarysystem.models.magazine.MonthlyMagazine;
+import src.com.librarysystem.models.magazine.WeeklyMagazine;
+import src.com.librarysystem.observer.ClientObserver;
 
 public class Main {
     public static void main(String[] args) {
-        // Инициализация менеджеров и сервисов
-        BookManager bookManager = BookManager.getInstance();
-        ClientManager clientManager = ClientManager.getInstance();
-        BookService bookService = new BookService(bookManager);
-        ClientService clientService = new ClientService(clientManager);
+        // Создание менеджера журналов
+        MagazineManager magazineManager = MagazineManager.getInstance();
 
-        // Использование абстрактной фабрики для создания книг и журналов
-        AbstractFactory libraryFactory = new LibraryFactory();
+        // Создание журналов
+        MonthlyMagazine monthlyMagazine = new MonthlyMagazine(1, "Monthly Tech", "John Doe", false, 5);
+        WeeklyMagazine weeklyMagazine = new WeeklyMagazine(2, "Weekly News", "Jane Smith", true, "Week 42");
 
-        // Создание различных типов книг
-        Book physicalBook = libraryFactory.createPhysicalBook(1, "Physical Book Title", "Author A", 300, true);
-        bookManager.addBook(physicalBook);
+        // Подписка клиентов на журналы
+        ClientObserver client1 = new ClientObserver("Client A");
+        ClientObserver client2 = new ClientObserver("Client B");
 
-        Book eBook = libraryFactory.createEBook(2, "E-Book Title", "Author B", 1.5, true);
-        bookManager.addBook(eBook);
+        // Подписываем клиентов на ежемесячный журнал
+        monthlyMagazine.subscribe(client1);
+        monthlyMagazine.subscribe(client2);
 
-        Book audioBook = libraryFactory.createAudioBook(3, "AudioBook Title", "Author C", 5.0, true);
-        bookManager.addBook(audioBook);
+        // Подписываем клиентов на еженедельный журнал
+        weeklyMagazine.subscribe(client1);
 
-        // Создание различных типов журналов
-        Magazine monthlyMagazine = libraryFactory.createMonthlyMagazine(4, "Monthly Magazine Title", "Editor A", true, 10);
-        Magazine weeklyMagazine = libraryFactory.createWeeklyMagazine(5, "Weekly Magazine Title", "Editor B", true, "Week 40");
+        // Изменение доступности журналов
+        System.out.println("Изменение доступности ежемесячного журнала:");
+        monthlyMagazine.changeAvailability(true); // Уведомление всех подписчиков
 
-        // Вывод информации о созданных книгах и журналах
-        System.out.println("\n=============================\n");
-        Iterator<Book> bookIterator = bookManager.getAllBooks().iterator();
-        while (bookIterator.hasNext()) {
-            Book book = bookIterator.next();
-            System.out.println(book.showInfo());
-        }
+        System.out.println("\nИзменение доступности еженедельного журнала:");
+        weeklyMagazine.changeAvailability(false); // Уведомление всех подписчиков
 
+        // Добавление журналов в менеджер
+        magazineManager.addMagazine(monthlyMagazine);
+        magazineManager.addMagazine(weeklyMagazine);
+
+        // Показываем информацию о журналах
+        System.out.println("\nИнформация о журналах:");
         System.out.println(monthlyMagazine.showInfo());
         System.out.println(weeklyMagazine.showInfo());
-
-        // Создание клиентов
-        Client regularClient = ClientFactory.createRegularClient(1, "Akhmetova Dilyara", "akhmetova_dilyara@gmail.com");
-        Client premiumClient1 = ClientFactory.createPremiumClient(2, "Beisembay Umitzhan", "beisembay_umitzhan@gmail.com", 0.1);
-        Client premiumClient2 = ClientFactory.createPremiumClient(3, "Mustafa Akerke", "mustafa_akerke@gmail.com", 0.05);
-
-        // Добавление клиентов в менеджер
-        clientManager.addClient(regularClient);
-        clientManager.addClient(premiumClient1);
-        clientManager.addClient(premiumClient2);
-
-        // Вывод информации о клиентах
-        System.out.println("\n=============================\n");
-        Iterator<Client> clientIterator = clientManager.createIterator(); 
-        while (clientIterator.hasNext()) {
-            Client client = clientIterator.next();
-            System.out.println(client);
-        }
-
-        // Создание отчёта
-        Report monthlyReport = new Report.ReportBuilder()
-                .setTitle("Report for September")
-                .setContent("In this month 150 books were reserved and 30 new clients were added.")
-                .setCreationDate(LocalDate.now())
-                .build();
-
-        System.out.println("\n=============================\n");
-        System.out.println(monthlyReport);
-
-        // Проверка доступности книги и резервирование клиентом
-        try {
-            boolean isAvailable = bookService.isBookAvailable(1);
-            System.out.println("Physical Book Available: " + isAvailable);
-
-            // Резервирование книги клиентом
-            clientService.reserve(1); // Использование клиента с ID 1
-            System.out.println("Physical Book reserved successfully.");
-
-            isAvailable = bookService.isBookAvailable(1);
-            System.out.println("Physical Book Available after reservation: " + isAvailable);
-
-            // Отмена резервирования клиентом
-            clientService.cancelReserve(1); // Использование клиента с ID 1
-            System.out.println("Reservation for Physical Book cancelled.");
-
-            isAvailable = bookService.isBookAvailable(1);
-            System.out.println("Physical Book Available after cancellation: " + isAvailable);
-        } catch (BookNotFoundException | ClientNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-
-        // Изменение доступности книги
-        try {
-            bookService.changeAvailability(1, false); // Установка доступности физической книги в false
-            System.out.println("Physical Book availability changed to: false");
-        } catch (BookNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-
-        // Удаление книги с использованием состояния
-        BookContext bookContext = new BookContext();
-        try {
-            bookContext.delete(physicalBook, bookManager); // Удаляем книгу через BookContext
-            System.out.println("Physical Book removed.");
-        } catch (Exception e) {
-            System.out.println("Failed to delete the book: " + e.getMessage());
-        }
-
-        // Вывод оставшихся книг
-        System.out.println("\nRemaining books in the system:");
-        int totalBooks = bookManager.getTotalBooks();
-        System.out.println("Total count: " + totalBooks);
-
-        // Вывод оставшихся книг
-        System.out.println("Remaining books:");
-        bookIterator = bookManager.getAllBooks().iterator();
-        while (bookIterator.hasNext()) {
-            Book book = bookIterator.next();
-            System.out.println(book.showInfo());
-        }
-
-        System.out.println("\n=============================\n");
     }
 }
