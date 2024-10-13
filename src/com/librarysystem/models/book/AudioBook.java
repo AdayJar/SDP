@@ -1,6 +1,6 @@
 package src.com.librarysystem.models.book;
 
-import src.com.librarysystem.manager.BookManager;
+
 
 // The AudioBook class represents an audiobook in the library system, implementing the Book interface.
 public class AudioBook implements Book {
@@ -53,7 +53,7 @@ public class AudioBook implements Book {
     public String getAuthor() {
         return author;
     }
-
+    
 
     // Checks if the audiobook is available for borrowing
 
@@ -73,27 +73,8 @@ public class AudioBook implements Book {
     }
 
     // Reserves the audiobook, marking it as unavailable
-    public void reserve() {
-        if (available) {
-            available = false; 
-            System.out.println("Audiobook " + title + " has been reserved.");
-        } else {
-            System.out.println("Audiobook " + title + " is not available for reservation.");
-        }
-    }
-
-    // Cancels the reservation of the audiobook, making it available again
-    @Override
-    public void cancelReservation() {
-        available = true; 
-        System.out.println("Reservation for audiobook " + title + " has been cancelled.");
-    }
-
-    // Changes the availability status of the audiobook
     public void changeAvailability(boolean availability) {
-        this.available = availability; 
-        String status = availability ? "available" : "not available";
-        System.out.println("Audiobook " + title + " is now " + status + ".");
-
+        this.available = availability;
     }
+   
 }

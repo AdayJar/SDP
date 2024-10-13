@@ -31,6 +31,7 @@ public class PremiumClient implements Client {
     public double getDiscount() {
         return discount;
     }
+   
 
     @Override
     public String toString() {

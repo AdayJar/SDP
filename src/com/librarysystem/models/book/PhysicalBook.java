@@ -62,31 +62,11 @@ public class PhysicalBook implements Book { // PhysicalBook implements the Book 
     }
 
     // Method to reserve the book
-    @Override
-    public void reserve() {
-        if (available) { // Check if the book is available for reservation
-            available = false; // Mark the book as not available
-
-            System.out.println("Book " + title + " has been reserved.");
-        } else {
-            System.out.println("Book " + title + " is not available for reservation.");
-        }
-    }
-
-  
-
-    // Method to cancel the reservation of the book
-    @Override
-    public void cancelReservation() {
-        available = true; // Mark the book as available
-        System.out.println("Reservation for book " + title + " has been cancelled.");
-    }
+    
 
     // Method to change the availability status of the book
     public void changeAvailability(boolean availability) {
-        this.available = availability; // Set the availability status
-        String status = availability ? "available" : "not available"; // Determine status message
-        System.out.println("Book " + title + " is now " + status + ".");
+        this.available = availability;
     }
 
 }
