@@ -1,6 +1,6 @@
-package src.com.librarysystem.models;
+package src.com.librarysystem.models.book;
 
-import src.com.librarysystem.manager.BookManager; // Import book manager interface
+
 
 public class EBook implements Book { // EBook implements the Book interface
     private int id; // Unique identifier for the eBook
@@ -56,28 +56,10 @@ public class EBook implements Book { // EBook implements the Book interface
     }
 
     // Method to reserve the eBook
-    @Override
-    public void reserve() {
-        if (available) { // Check if the eBook is available for reservation
-            available = false; // Mark the eBook as not available
-            System.out.println("E-Book " + title + " has been reserved."); // Confirmation message
-        } else {
-            System.out.println("E-Book " + title + " is not available for reservation."); // Error message
-        }
-    }
-
-    // Method to cancel the reservation of the eBook
-    @Override
-    public void cancelReservation() {
-        available = true; // Mark the eBook as available again
-        System.out.println("Reservation for E-Book " + title + " has been cancelled."); // Confirmation message
-    }
+   
 
     // Method to change the availability status of the eBook
     public void changeAvailability(boolean availability) {
-        this.available = availability; // Set the new availability status
-        String status = availability ? "available" : "not available"; // Determine status message
-        System.out.println("E-Book " + title + " is now " + status + "."); // Confirmation message
-
+        this.available = availability;
     }
 }

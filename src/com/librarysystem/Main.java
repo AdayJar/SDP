@@ -1,171 +1,110 @@
-<<<<<<< HEAD
-package SDP.src.com.librarysystem;
-
-import SDP.src.com.librarysystem.exceptions.BookNotFoundException;
-import SDP.src.com.librarysystem.factory.SimpleBookFactory;
-import SDP.src.com.librarysystem.manager.BookManager;
-import SDP.src.com.librarysystem.models.Book;
-import SDP.src.com.librarysystem.service.BookService;
-
-public class Main {
-    public static void main(String[] args) {
-     
-        BookManager bookManager = new BookManager();
-
-    
-        SimpleBookFactory bookFactory = new SimpleBookFactory();
-
-    
-        BookService bookService = new BookService(bookManager);
-
-        
-        Book physicalBook = bookFactory.createPhysicalBook(1, "Physical Book Title", "Author 1", 300, true);
-        Book eBook = bookFactory.createEBook(2, "EBook Title", "Author 2", 2.5, true);
-        Book audioBook = bookFactory.createAudioBook(3, "AudioBook Title", "Author 3", 5.0, true);
-
-=======
 package src.com.librarysystem;
 
 import src.com.librarysystem.exceptions.BookNotFoundException;
-import src.com.librarysystem.factory.SimpleBookFactory;
+import src.com.librarysystem.exceptions.ClientNotFoundException; // Добавлено исключение для клиентов
+import src.com.librarysystem.factory.bookAbstractFactory.AbstractFactory;
+import src.com.librarysystem.factory.bookAbstractFactory.LibraryFactory;
+import src.com.librarysystem.factory.clientFactory.ClientFactory;
 import src.com.librarysystem.manager.BookManager;
-import src.com.librarysystem.models.Book;
+import src.com.librarysystem.manager.ClientManager; // Импорт менеджера клиентов
+import src.com.librarysystem.models.book.Book;
+import src.com.librarysystem.models.clients.Client;
+import src.com.librarysystem.models.magazine.Magazine;
 import src.com.librarysystem.service.BookService;
+import src.com.librarysystem.service.ClientService; // Импорт сервиса клиентов
+import java.time.LocalDate;
+import src.com.librarysystem.report.Report;
 
 public class Main {
     public static void main(String[] args) {
-
-       
+        // Инициализация менеджеров и сервисов
         BookManager bookManager = BookManager.getInstance();
-
-        SimpleBookFactory bookFactory = new SimpleBookFactory();
-
+        ClientManager clientManager = ClientManager.getInstance(); // Инициализация менеджера клиентов
         BookService bookService = new BookService(bookManager);
+        ClientService clientService = new ClientService(clientManager); // Инициализация сервиса клиентов
 
+        // Использование абстрактной фабрики для создания книг и журналов
+        AbstractFactory libraryFactory = new LibraryFactory();
 
-        Book physicalBook = bookFactory.createPhysicalBook(1, "Head First Design Patterns", "Elisabeth Robson", 694, true);
-        Book eBook = bookFactory.createEBook(2, "Grokking Algorithms", " Aditya Bhargava", 10.2, true);
-        Book audioBook = bookFactory.createAudioBook(3, "Язык Go для начинающих", "Максим Жашкевич", 40.0, true);
+        // Создание различных типов книг с помощью фабрики
+        Book physicalBook = libraryFactory.createPhysicalBook(1, "Physical Book Title", "Author A", 300, true);
+        bookManager.addBook(physicalBook); // Добавление книги
 
-       
->>>>>>> 5e8001b233b8557f28f0b1a16f467d223a5fbcdb
-        bookManager.addBook(physicalBook);
-        bookManager.addBook(eBook);
-        bookManager.addBook(audioBook);
+        Book eBook = libraryFactory.createEBook(2, "E-Book Title", "Author B", 1.5, true);
+        bookManager.addBook(eBook); // Добавление книги
 
-<<<<<<< HEAD
-  
-=======
+        Book audioBook = libraryFactory.createAudioBook(3, "AudioBook Title", "Author C", 5.0, true);
+        bookManager.addBook(audioBook); // Добавление книги
+
+        // Создание различных типов журналов с помощью фабрики
+        Magazine monthlyMagazine = libraryFactory.createMonthlyMagazine(4, "Monthly Magazine Title", "Editor A", true, 10);
+        Magazine weeklyMagazine = libraryFactory.createWeeklyMagazine(5, "Weekly Magazine Title", "Editor B", true, "Week 40");
+
+        // Вывод информации о созданных книгах и журналах
         System.out.println("\n=============================\n");
+        System.out.println(physicalBook.showInfo());
+        System.out.println(eBook.showInfo());
+        System.out.println(audioBook.showInfo());
+        System.out.println(monthlyMagazine.showInfo());
+        System.out.println(weeklyMagazine.showInfo());
 
+        // Использование фабрики клиентов для создания клиентов
+        Client regularClient = ClientFactory.createRegularClient(1, "Akhmetova Dilyara", "akhmetova_dilyara@gmail.com");
+        Client premiumClient1 = ClientFactory.createPremiumClient(2, "Beisembay Umitzhan", "beisembay_umitzhan@gmail.com", 0.1);
+        Client premiumClient2 = ClientFactory.createPremiumClient(3, "Mustafa Akerke", "mustafa_akerke@gmail.com", 0.05);
+        
+        // Добавление клиентов в менеджер
+        clientManager.addClient(regularClient);
+        clientManager.addClient(premiumClient1);
+        clientManager.addClient(premiumClient2);
 
->>>>>>> 5e8001b233b8557f28f0b1a16f467d223a5fbcdb
+        // Вывод информации о клиентах
+        System.out.println("\n=============================\n");
+        System.out.println(regularClient);
+        System.out.println(premiumClient1);
+        System.out.println(premiumClient2);
+
+        // Создание отчёта с помощью билдера
+        Report monthlyReport = new Report.ReportBuilder()
+                .setTitle("Report for September")
+                .setContent("In this month 150 books were reserved and 30 new clients were added.")
+                .setCreationDate(LocalDate.now())
+                .build();
+
+        System.out.println("\n=============================\n");
+        System.out.println(monthlyReport);
+
+        // Проверка доступности книги и резервирование клиентом
         try {
             boolean isAvailable = bookService.isBookAvailable(1);
             System.out.println("Physical Book Available: " + isAvailable);
-        } catch (BookNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
 
-<<<<<<< HEAD
-    
-=======
-        System.out.println("\n-----------------------------\n");
-
-     
->>>>>>> 5e8001b233b8557f28f0b1a16f467d223a5fbcdb
-        try {
-            bookService.reserveBook(1);
+            // Резервирование книги клиентом
+            clientService.reserve(1); // Использование клиента с ID 1
             System.out.println("Physical Book reserved successfully.");
-        } catch (BookNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
 
-<<<<<<< HEAD
-    
-=======
-        System.out.println("\n-----------------------------\n");
+            isAvailable = bookService.isBookAvailable(1);
+            System.out.println("Physical Book Available after reservation: " + isAvailable);
 
-        try {
-            boolean isAvailable = bookService.isBookAvailable(1);
-            System.out.println("Physical Book Available: " + isAvailable);
-        } catch (BookNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-
-        System.out.println("\n-----------------------------\n");
-
- 
->>>>>>> 5e8001b233b8557f28f0b1a16f467d223a5fbcdb
-        try {
-            bookService.cancelReservation(1);
+            // Отмена резервирования клиентом
+            clientService.cancelReserve(1); // Использование клиента с ID 1
             System.out.println("Reservation for Physical Book cancelled.");
-        } catch (BookNotFoundException e) {
+
+            isAvailable = bookService.isBookAvailable(1);
+            System.out.println("Physical Book Available after cancellation: " + isAvailable);
+        } catch (BookNotFoundException | ClientNotFoundException e) {
             System.out.println(e.getMessage());
         }
 
-<<<<<<< HEAD
-       
+        // Удаление книги и вывод информации об оставшихся книгах
         bookManager.removeBook(1);
         System.out.println("Physical Book removed.");
 
-   
-        System.out.println("Remaining books in the system:");
-        bookManager.getAllBooks().forEach(book -> System.out.println(book.showInfo()));
-=======
-        System.out.println("\n-----------------------------\n");
-        try {
-            boolean isAvailable = bookService.isBookAvailable(1);
-            System.out.println("Physical Book Available: " + isAvailable);
-        } catch (BookNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-
-
-        System.out.println("\n-----------------------------\n");
-
-     
-      
-        bookManager.removeBook(1);
-        System.out.println("Physical Book removed.");
-
-        System.out.println("\n=============================\n");
-
-        Book oldBook = bookManager.findBookById(2);
-        Book updatedBook = oldBook.clone();
-        
-   
-        
-    
-      
-        bookManager.addBook(updatedBook);
-
-
-        System.out.println("\n=============================\n");
-
-        Book bookend=bookManager.findBookById(3);
-       
-        try {
-            bookend.changeAvailability(false); 
-            System.out.println("Book availability changed to: " + updatedBook.isAvailable());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        System.out.println("Remaining books in the system:");
-
-        System.out.println("");
-
+        System.out.println("\nRemaining books in the system:");
         int totalBooks = bookManager.getTotalBooks();
-        
         System.out.println("Total count: " + totalBooks);
-        System.out.println("");
-
         bookManager.getAllBooks().forEach(book -> System.out.println(book.showInfo()));
 
         System.out.println("\n=============================\n");
-        
-        
->>>>>>> 5e8001b233b8557f28f0b1a16f467d223a5fbcdb
     }
 }
