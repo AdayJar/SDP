@@ -1,4 +1,4 @@
-package src.com.librarysystem.clients;
+package src.com.librarysystem.models.clients;
 
 public interface Client {
     int getId();
