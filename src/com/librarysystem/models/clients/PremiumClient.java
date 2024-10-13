@@ -1,10 +1,10 @@
 package src.com.librarysystem.models.clients;
 
 public class PremiumClient implements Client {
-    private int id;
-    private String name;
-    private String email;
-    private double discount; 
+    private final int id;
+    private final String name;
+    private final String email;
+    private final double discount;
 
     public PremiumClient(int id, String name, String email, double discount) {
         this.id = id;
@@ -31,7 +31,11 @@ public class PremiumClient implements Client {
     public double getDiscount() {
         return discount;
     }
-   
+
+    @Override
+    public void update(String message) {
+        System.out.println("Уведомление для премиум-клиента " + name + ": " + message);
+    }
 
     @Override
     public String toString() {

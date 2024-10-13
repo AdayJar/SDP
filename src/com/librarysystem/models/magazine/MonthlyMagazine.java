@@ -35,24 +35,14 @@ public class MonthlyMagazine implements Magazine {
         return available;
     }
 
-    @Override
-    public void reserve() {
-        if (available) {
-            available = false;
-            System.out.println("The magazine " + title + " has been reserved.");
-        } else {
-            System.out.println("The magazine " + title + " is not available for reservation.");
-        }
-    }
-
-    @Override
-    public void cancelReservation() {
-        available = true;
-        System.out.println("Reservation for the magazine " + title + " has been canceled.");
-    }
 
     @Override
     public String showInfo() {
         return "ID: " + id + ", Title: " + title + ", Editor: " + editor + ", Available: " + available + ", Issue Number: " + issueNumber;
     }
+    @Override
+    public void changeAvailability(boolean availability) {
+        this.available=availability;
+    }
 }
+

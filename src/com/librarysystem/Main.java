@@ -1,58 +1,63 @@
 package src.com.librarysystem;
 
 import src.com.librarysystem.exceptions.BookNotFoundException;
-import src.com.librarysystem.exceptions.ClientNotFoundException; // Добавлено исключение для клиентов
+import src.com.librarysystem.exceptions.ClientNotFoundException;
 import src.com.librarysystem.factory.bookAbstractFactory.AbstractFactory;
 import src.com.librarysystem.factory.bookAbstractFactory.LibraryFactory;
 import src.com.librarysystem.factory.clientFactory.ClientFactory;
 import src.com.librarysystem.manager.BookManager;
-import src.com.librarysystem.manager.ClientManager; // Импорт менеджера клиентов
+import src.com.librarysystem.manager.ClientManager;
 import src.com.librarysystem.models.book.Book;
 import src.com.librarysystem.models.clients.Client;
 import src.com.librarysystem.models.magazine.Magazine;
 import src.com.librarysystem.service.BookService;
-import src.com.librarysystem.service.ClientService; // Импорт сервиса клиентов
-import java.time.LocalDate;
+import src.com.librarysystem.service.ClientService;
 import src.com.librarysystem.report.Report;
+import src.com.librarysystem.state.BookContext;
+import java.time.LocalDate;
+import java.util.Iterator;
 
 public class Main {
     public static void main(String[] args) {
         // Инициализация менеджеров и сервисов
         BookManager bookManager = BookManager.getInstance();
-        ClientManager clientManager = ClientManager.getInstance(); // Инициализация менеджера клиентов
+        ClientManager clientManager = ClientManager.getInstance();
         BookService bookService = new BookService(bookManager);
-        ClientService clientService = new ClientService(clientManager); // Инициализация сервиса клиентов
+        ClientService clientService = new ClientService(clientManager);
 
         // Использование абстрактной фабрики для создания книг и журналов
         AbstractFactory libraryFactory = new LibraryFactory();
 
-        // Создание различных типов книг с помощью фабрики
+        // Создание различных типов книг
         Book physicalBook = libraryFactory.createPhysicalBook(1, "Physical Book Title", "Author A", 300, true);
-        bookManager.addBook(physicalBook); // Добавление книги
+        bookManager.addBook(physicalBook);
 
         Book eBook = libraryFactory.createEBook(2, "E-Book Title", "Author B", 1.5, true);
-        bookManager.addBook(eBook); // Добавление книги
+        bookManager.addBook(eBook);
 
         Book audioBook = libraryFactory.createAudioBook(3, "AudioBook Title", "Author C", 5.0, true);
-        bookManager.addBook(audioBook); // Добавление книги
+        bookManager.addBook(audioBook);
 
-        // Создание различных типов журналов с помощью фабрики
+        // Создание различных типов журналов
         Magazine monthlyMagazine = libraryFactory.createMonthlyMagazine(4, "Monthly Magazine Title", "Editor A", true, 10);
         Magazine weeklyMagazine = libraryFactory.createWeeklyMagazine(5, "Weekly Magazine Title", "Editor B", true, "Week 40");
 
         // Вывод информации о созданных книгах и журналах
         System.out.println("\n=============================\n");
-        System.out.println(physicalBook.showInfo());
-        System.out.println(eBook.showInfo());
-        System.out.println(audioBook.showInfo());
+        Iterator<Book> bookIterator = bookManager.getAllBooks().iterator();
+        while (bookIterator.hasNext()) {
+            Book book = bookIterator.next();
+            System.out.println(book.showInfo());
+        }
+
         System.out.println(monthlyMagazine.showInfo());
         System.out.println(weeklyMagazine.showInfo());
 
-        // Использование фабрики клиентов для создания клиентов
+        // Создание клиентов
         Client regularClient = ClientFactory.createRegularClient(1, "Akhmetova Dilyara", "akhmetova_dilyara@gmail.com");
         Client premiumClient1 = ClientFactory.createPremiumClient(2, "Beisembay Umitzhan", "beisembay_umitzhan@gmail.com", 0.1);
         Client premiumClient2 = ClientFactory.createPremiumClient(3, "Mustafa Akerke", "mustafa_akerke@gmail.com", 0.05);
-        
+
         // Добавление клиентов в менеджер
         clientManager.addClient(regularClient);
         clientManager.addClient(premiumClient1);
@@ -60,11 +65,13 @@ public class Main {
 
         // Вывод информации о клиентах
         System.out.println("\n=============================\n");
-        System.out.println(regularClient);
-        System.out.println(premiumClient1);
-        System.out.println(premiumClient2);
+        Iterator<Client> clientIterator = clientManager.createIterator(); 
+        while (clientIterator.hasNext()) {
+            Client client = clientIterator.next();
+            System.out.println(client);
+        }
 
-        // Создание отчёта с помощью билдера
+        // Создание отчёта
         Report monthlyReport = new Report.ReportBuilder()
                 .setTitle("Report for September")
                 .setContent("In this month 150 books were reserved and 30 new clients were added.")
@@ -96,14 +103,35 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        // Удаление книги и вывод информации об оставшихся книгах
-        bookManager.removeBook(1);
-        System.out.println("Physical Book removed.");
+        // Изменение доступности книги
+        try {
+            bookService.changeAvailability(1, false); // Установка доступности физической книги в false
+            System.out.println("Physical Book availability changed to: false");
+        } catch (BookNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
 
+        // Удаление книги с использованием состояния
+        BookContext bookContext = new BookContext();
+        try {
+            bookContext.delete(physicalBook, bookManager); // Удаляем книгу через BookContext
+            System.out.println("Physical Book removed.");
+        } catch (Exception e) {
+            System.out.println("Failed to delete the book: " + e.getMessage());
+        }
+
+        // Вывод оставшихся книг
         System.out.println("\nRemaining books in the system:");
         int totalBooks = bookManager.getTotalBooks();
         System.out.println("Total count: " + totalBooks);
-        bookManager.getAllBooks().forEach(book -> System.out.println(book.showInfo()));
+
+        // Вывод оставшихся книг
+        System.out.println("Remaining books:");
+        bookIterator = bookManager.getAllBooks().iterator();
+        while (bookIterator.hasNext()) {
+            Book book = bookIterator.next();
+            System.out.println(book.showInfo());
+        }
 
         System.out.println("\n=============================\n");
     }

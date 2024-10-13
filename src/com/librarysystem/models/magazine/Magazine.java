@@ -6,6 +6,6 @@ public interface Magazine {
     String getEditor(); 
     boolean isAvailable();
     String showInfo(); 
-    void reserve(); 
-    void cancelReservation(); 
+    void changeAvailability(boolean availability);
+    
 }

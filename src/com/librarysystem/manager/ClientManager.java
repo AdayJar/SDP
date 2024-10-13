@@ -1,18 +1,14 @@
-// Пакет, к которому относится класс ClientManager
 package src.com.librarysystem.manager;
 
-// Необходимые импорты
-import src.com.librarysystem.models.clients.Client;
 import java.util.HashMap;
 import java.util.Map;
+import src.com.librarysystem.iterator.ClientIterator;
+import src.com.librarysystem.models.clients.Client;
 
 // Менеджер для управления клиентами
 public class ClientManager {
-    // Статическая переменная для хранения единственного экземпляра ClientManager
-    private static ClientManager instance;
-
-    // Коллекция для хранения клиентов с их идентификаторами
-    private Map<Integer, Client> clients = new HashMap<>();
+    private static ClientManager instance; // Статическая переменная для хранения единственного экземпляра ClientManager
+    private Map<Integer, Client> clients = new HashMap<>(); // Коллекция для хранения клиентов с их идентификаторами
 
     // Приватный конструктор для предотвращения создания объектов извне (Singleton)
     private ClientManager() {
@@ -21,15 +17,15 @@ public class ClientManager {
     // Метод для получения единственного экземпляра ClientManager
     public static synchronized ClientManager getInstance() {
         if (instance == null) {
-            instance = new ClientManager();
+            instance = new ClientManager(); // Создаем новый экземпляр, если он не существует
         }
-        return instance;
+        return instance; // Возвращаем единственный экземпляр
     }
 
     // Метод для добавления клиента
     public void addClient(Client client) {
         clients.put(client.getId(), client);
-        System.out.println("Клиент добавлен: " + client);
+        System.out.println("Client added: " + client);
     }
 
     // Метод для поиска клиента по идентификатору
@@ -40,7 +36,7 @@ public class ClientManager {
     // Метод для удаления клиента по идентификатору
     public void removeClient(int id) {
         clients.remove(id);
-        System.out.println("Клиент с ID " + id + " был удалён.");
+        System.out.println("Client with ID " + id + " has been removed.");
     }
 
     // Метод для получения общего количества клиентов
@@ -48,8 +44,13 @@ public class ClientManager {
         return clients.size();
     }
 
-    // Метод для получения всех клиентов (опционально)
-    public Map<Integer, Client> getAllClients() {
-        return new HashMap<>(clients); // Возвращает копию коллекции клиентов
+    // Метод для получения карты клиентов
+    public Map<Integer, Client> getClientsMap() {
+        return clients;
+    }
+
+    // Метод для создания итератора клиентов
+    public ClientIterator createIterator() {
+        return new ClientIterator(this); // Возвращаем новый экземпляр итератора клиентов
     }
 }

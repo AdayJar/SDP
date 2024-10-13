@@ -1,6 +1,7 @@
 package src.com.librarysystem.models.book;
 
-
+import src.com.librarysystem.manager.BookManager;
+import src.com.librarysystem.state.BookContext;
 
 public class EBook implements Book { // EBook implements the Book interface
     private int id; // Unique identifier for the eBook
@@ -8,7 +9,7 @@ public class EBook implements Book { // EBook implements the Book interface
     private String author; // Author of the eBook
     private double sizeMB; // Size of the eBook in megabytes
     private boolean available; // Availability status of the eBook
-
+    private BookManager bookManager;
     // Constructor to initialize eBook attributes
     public EBook(int id, String title, String author, double sizeMB, boolean available) {
         this.id = id; // Set the unique ID
@@ -59,6 +60,14 @@ public class EBook implements Book { // EBook implements the Book interface
    
 
     // Method to change the availability status of the eBook
+    public void delete() {
+        // Здесь мы можем использовать контекст состояния для удаления
+        BookContext context = new BookContext();
+        context.delete(this, bookManager); // Удаляем книгу через состояние
+    }
+
+    // Method to change the availability status of the book
+    @Override
     public void changeAvailability(boolean availability) {
         this.available = availability;
     }

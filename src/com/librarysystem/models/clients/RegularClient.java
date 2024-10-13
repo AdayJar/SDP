@@ -27,6 +27,11 @@ public class RegularClient implements Client {
     }
 
     @Override
+    public void update(String message) {
+        System.out.println("Уведомление для регулярного клиента " + name + ": " + message);
+    }
+
+    @Override
     public String toString() {
         return "RegularClient{" +
                 "id=" + id +

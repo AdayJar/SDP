@@ -24,6 +24,7 @@ public interface Book {
     
     // Method to change the availability status of the book
     void changeAvailability(boolean availability);
+    void delete();
     
     // Method to create a clone of the book object
     Book clone(); 
