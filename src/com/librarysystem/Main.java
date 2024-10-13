@@ -1,6 +1,9 @@
 package src.com.librarysystem;
 
 import src.com.librarysystem.models.clients.Client;
+import src.com.librarysystem.command.AddReviewCommand;
+import src.com.librarysystem.command.Command;
+import src.com.librarysystem.command.RemoveReviewCommand;
 import src.com.librarysystem.exceptions.BookNotFoundException;
 import src.com.librarysystem.exceptions.ClientNotFoundException;
 import src.com.librarysystem.factory.bookAbstractFactory.AbstractFactory;
@@ -12,7 +15,7 @@ import java.time.LocalDate;
 import src.com.librarysystem.report.Report;
 import src.com.librarysystem.service.BookService;
 import src.com.librarysystem.service.ClientService;
-import src.com.librarysystem.manager.*;;
+import src.com.librarysystem.manager.*;
 
 
 
@@ -110,6 +113,26 @@ public class Main {
         bookManager.getAllBooks().forEach(book -> System.out.println(book.showInfo()));
 
         System.out.println("\n=============================\n");
+
+        ReviewManager reviewManager = new ReviewManager();
+        HistoryManager historyManager = new HistoryManager();
+
+        Command addReview1 = new AddReviewCommand(reviewManager, "Great book!");
+        Command addReview2 = new AddReviewCommand(reviewManager, "Not bad.");
+        Command removeReview = new RemoveReviewCommand(reviewManager, 0);
+
+        historyManager.executeCommand(addReview1);
+        historyManager.executeCommand(addReview2);
+        reviewManager.showReviews();
+
+        historyManager.executeCommand(removeReview);
+        reviewManager.showReviews();
+
+        historyManager.undoLastCommand(); 
+        reviewManager.showReviews();
+
+        historyManager.undoLastCommand(); 
+        reviewManager.showReviews();
 
     
     }
