@@ -16,7 +16,7 @@ public class BookIterator implements Iterator<Book> {
     // Checks if there is a next book
     @Override
     public boolean hasNext() {
-        return currentIndex < bookManager.getTotalBooks();
+        return currentIndex < bookManager.getTotal();
     }
 
     // Returns the next book
@@ -25,7 +25,7 @@ public class BookIterator implements Iterator<Book> {
         if (!hasNext()) {
             throw new IndexOutOfBoundsException("No more books available.");
         }
-        Book book = bookManager.getAllBooks().get(currentIndex); // Get the book by index
+        Book book = bookManager.getItems().get(currentIndex); // Get the book by index
         currentIndex++;
         return book;
     }

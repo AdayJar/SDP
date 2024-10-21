@@ -15,7 +15,7 @@ public class ClientService {
     // Метод для резервирования клиентом книги
     public void reserve(int clientId) throws ClientNotFoundException {
         // Найти клиента по его ID
-        Client client = clientManager.findClientById(clientId);
+        Client client = clientManager.findById(clientId);
         // Проверить, существует ли клиент
         if (client == null) {
             throw new ClientNotFoundException("Client with ID " + clientId + " not found."); // Исключение, если клиент не найден
@@ -27,7 +27,7 @@ public class ClientService {
   
     public void cancelReserve(int clientId) throws ClientNotFoundException {
        
-        Client client = clientManager.findClientById(clientId);
+        Client client = clientManager.findById(clientId);
         
         if (client == null) {
             throw new ClientNotFoundException("Client with ID " + clientId + " not found."); // Исключение, если клиент не найден

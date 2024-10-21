@@ -4,5 +4,6 @@ public interface Client {
     int getId();
     String getName();
     String getEmail();
-    void update(String message); // Метод для получения уведомлений
+    void update(String message);
+    String showInfo();
 }

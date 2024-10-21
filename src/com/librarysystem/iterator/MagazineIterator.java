@@ -16,7 +16,7 @@ public class MagazineIterator implements Iterator<Magazine> {
     // Checks if there is a next magazine
     @Override
     public boolean hasNext() {
-        return currentIndex < magazineManager.getTotalMagazines();
+        return currentIndex < magazineManager.getTotal();
     }
 
     // Returns the next magazine
@@ -25,7 +25,7 @@ public class MagazineIterator implements Iterator<Magazine> {
         if (!hasNext()) {
             throw new IndexOutOfBoundsException("No more magazines available.");
         }
-        Magazine magazine = magazineManager.getAllMagazines().get(currentIndex); // Get the magazine by index
+        Magazine magazine = magazineManager.getItems().get(currentIndex); // Get the magazine by index
         currentIndex++;
         return magazine;
     }

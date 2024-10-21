@@ -31,6 +31,10 @@ public class PremiumClient implements Client {
     public double getDiscount() {
         return discount;
     }
+    @Override
+    public String showInfo() {
+        return "ID: " + id + ", Name: " + name + ", Email: " + email + ", Discount: " + discount ;
+    }
 
     @Override
     public void update(String message) {

@@ -14,7 +14,7 @@ public class MagazineService {
 
     // Метод для проверки доступности журнала по ID
     public boolean isMagazineAvailable(int id) throws MagazineNotFoundException {
-        Magazine magazine = magazineManager.findMagazineById(id);
+        Magazine magazine = magazineManager.findById(id);
         if (magazine == null) {
             throw new MagazineNotFoundException("Magazine with ID " + id + " not found."); // Выбрасываем исключение, если журнал не найден
         }
@@ -23,7 +23,7 @@ public class MagazineService {
 
     // Метод для изменения доступности журнала по ID
     public void changeMagazineAvailability(int id, boolean availability) throws MagazineNotFoundException {
-        Magazine magazine = magazineManager.findMagazineById(id);
+        Magazine magazine = magazineManager.findById(id);
         if (magazine == null) {
             throw new MagazineNotFoundException("Magazine with ID " + id + " not found."); // Выбрасываем исключение, если журнал не найден
         }

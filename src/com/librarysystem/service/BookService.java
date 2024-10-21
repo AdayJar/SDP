@@ -15,7 +15,7 @@ public class BookService {
     // Method to check the availability of a book by its ID
     public boolean isBookAvailable(int id) throws BookNotFoundException {
         // Find the book by its ID
-        Book book = bookManager.findBookById(id);
+        Book book = bookManager.findById(id);
         // Check if the book exists
         if (book == null) {
             throw new BookNotFoundException("Book with ID " + id + " not found."); // Throw exception if the book is not found
@@ -29,7 +29,7 @@ public class BookService {
     // Method to change the availability of a book by its ID
     public void changeAvailability(int id, boolean availability) throws BookNotFoundException {
         // Find the book by its ID
-        Book book = bookManager.findBookById(id);
+        Book book = bookManager.findById(id);
         // Check if the book exists
         if (book == null) {
             throw new BookNotFoundException("Book with ID " + id + " not found."); // Throw exception if the book is not found
