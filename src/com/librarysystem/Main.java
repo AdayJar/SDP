@@ -12,12 +12,13 @@ import src.com.librarysystem.factory.clientFactory.ClientFactory;
 import src.com.librarysystem.models.book.Book;
 import src.com.librarysystem.models.magazine.Magazine;
 import java.time.LocalDate;
+import java.util.List;
+
 import src.com.librarysystem.report.Report;
 import src.com.librarysystem.service.BookService;
 import src.com.librarysystem.service.ClientService;
+import src.com.librarysystem.strategy.*;
 import src.com.librarysystem.manager.*;
-
-
 
 
 public class Main {
@@ -28,21 +29,25 @@ public class Main {
         BookService bookService = new BookService(bookManager);
         ClientService clientService = new ClientService(clientManager);
 
+
         AbstractFactory libraryFactory = new LibraryFactory();
 
-        Book physicalBook = libraryFactory.createPhysicalBook(1, "Physical Book Title", "Author A", 300, true);
+        Book physicalBook = libraryFactory.createPhysicalBook(1, "1984", "George Orwell", "Dystopian", 1949, 328, true);
         bookManager.addBook(physicalBook); 
+        
+        Book physicalBook2 = libraryFactory.createPhysicalBook(2, "To Kill a Mockingbird", "Harper Lee", "Fiction", 1960, 281, true);
+        bookManager.addBook(physicalBook2); 
 
-        Book eBook = libraryFactory.createEBook(2, "E-Book Title", "Author B", 1.5, true);
+        Book eBook = libraryFactory.createEBook(3, "The Great Gatsby", "F. Scott Fitzgerald", "Classic", 1925, 1.5, true);
         bookManager.addBook(eBook); 
 
-        Book audioBook = libraryFactory.createAudioBook(3, "AudioBook Title", "Author C", 5.0, true);
+        Book audioBook = libraryFactory.createAudioBook(4, "The Catcher in the Rye", "J.D. Salinger", "Fiction", 1951, 10.0, true);
         bookManager.addBook(audioBook); 
 
-        Magazine monthlyMagazine = libraryFactory.createMonthlyMagazine(4, "Monthly Magazine Title", "Editor A", true, 10);
+        Magazine monthlyMagazine = libraryFactory.createMonthlyMagazine(5, "Monthly Magazine Title", "Editor A", true, 10);
     
 
-        Magazine weeklyMagazine = libraryFactory.createWeeklyMagazine(5, "Weekly Magazine Title", "Editor B", true, "Week 40");
+        Magazine weeklyMagazine = libraryFactory.createWeeklyMagazine(6, "Weekly Magazine Title", "Editor B", true, "Week 40");
         
 
         System.out.println("\n=============================\n");
@@ -76,10 +81,24 @@ public class Main {
             clientService.reserve(2, 1); 
             clientService.reserve(2, 2); 
             clientService.reserve(2, 3);
+            clientService.reserve(3, 1); 
         } catch (ClientNotFoundException e) {
             System.out.println("Reservation error: " + e.getMessage());
         }
         System.out.println("\n=============================\n");
+
+        //Strategy pattern for searching books
+        bookManager.setSearchStrategy(new AuthorSearchStrategy());
+        List<Integer> foundBookIdsByAuthor = bookManager.searchBooks("George Orwell");
+        System.out.println("Books found by author IDs: " + foundBookIdsByAuthor);
+
+        bookManager.setSearchStrategy(new TitleSearchStrategy());
+        List<Integer> foundBookIdsByTitle = bookManager.searchBooks("1984");
+        System.out.println("Books found by title IDs: " + foundBookIdsByTitle);
+
+        bookManager.setSearchStrategy(new GenreSearchStrategy());
+        List<Integer> foundBookIdsByGenre = bookManager.searchBooks("Fiction");
+        System.out.println("Books found by genre IDs: " + foundBookIdsByGenre);
 
 
         Report monthlyReport = new Report.ReportBuilder()

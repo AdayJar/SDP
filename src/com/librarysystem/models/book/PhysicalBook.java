@@ -1,25 +1,27 @@
 package src.com.librarysystem.models.book;
 
-import src.com.librarysystem.manager.BookManager; 
-
 public class PhysicalBook implements Book { 
     private int id; 
     private String title; 
     private String author; 
     private int pages; 
-    private boolean available; 
+    private boolean available;
+    private String genre; 
+    private int publicationYear; 
 
-    public PhysicalBook(int id, String title, String author, int pages, boolean available) {
+    public PhysicalBook(int id, String title, String author, String genre, int publicationYear, int pages, boolean available) {
         this.id = id;
         this.title = title;
         this.author = author;
+        this.genre = genre; 
+        this.publicationYear = publicationYear;
         this.pages = pages;
         this.available = available;
     }
 
     @Override
     public Book clone() {
-        return new PhysicalBook(id, title, author, pages, available); 
+        return new PhysicalBook(id, title, author, genre, publicationYear, pages, available); 
     }
 
     @Override
@@ -37,7 +39,6 @@ public class PhysicalBook implements Book {
         return author;
     }
 
-
     @Override
     public boolean isAvailable() {
         return available;
@@ -46,11 +47,20 @@ public class PhysicalBook implements Book {
     @Override
     public String showInfo() {
         return "Physical Book ID: " + id + ", Title: " + title + ", Author: " + author + ", Pages: " + pages +
-                ", Available: " + available;
+                ", Genre: " + genre + ", Year: " + publicationYear + ", Available: " + available;
     }  
     
     public void changeAvailability(boolean availability) {
         this.available = availability;
     }
 
+    @Override
+    public String getGenre() {
+        return genre;
+    }
+
+    @Override
+    public int getPublicationYear() {
+        return publicationYear;
+    }
 }

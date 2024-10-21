@@ -8,4 +8,6 @@ public interface Book {
     String showInfo();
     void changeAvailability(boolean availability);
     Book clone(); 
+    String getGenre(); 
+    int getPublicationYear();
 }

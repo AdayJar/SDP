@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import src.com.librarysystem.models.book.Book;
+import src.com.librarysystem.strategy.SearchStrategy;
 
 public class BookManager {
     private static BookManager instance;
     private List<Book> books = new ArrayList<>();
+    private SearchStrategy searchStrategy;
 
     private BookManager() {
     }
@@ -42,5 +44,13 @@ public class BookManager {
     public void removeBook(int id) {
         books.removeIf(book -> book.getId() == id); 
         System.out.println("Book with ID " + id + " has been removed.");
+    }
+    
+    public void setSearchStrategy(SearchStrategy searchStrategy) {
+        this.searchStrategy = searchStrategy; 
+    }
+
+    public List<Integer> searchBooks(String criteria) {
+        return searchStrategy.search(books, criteria);
     }
 }

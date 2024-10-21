@@ -19,7 +19,6 @@ public class ReservationLimitHandler implements Handler {
 
         if (currentReservations < MAX_RESERVATIONS || client instanceof PremiumClient) {
             System.out.println("Client " + client.getName() + " can reserve more books.");
-            ClientManager.getInstance().addReservation(client.getId());
             if (nextHandler != null) {
                 nextHandler.handleRequest(client, bookId);
             }

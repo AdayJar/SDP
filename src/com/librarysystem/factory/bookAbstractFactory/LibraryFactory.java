@@ -12,18 +12,18 @@ public class LibraryFactory implements AbstractFactory {
     
     // Создание книг
     @Override
-    public Book createPhysicalBook(int id, String title, String author, int pages, boolean available) {
-        return new PhysicalBook(id, title, author, pages, available);
+    public Book createPhysicalBook(int id, String title, String author, String genre, int publicationYear, int pages, boolean available) {
+        return new PhysicalBook(id, title, author, genre, publicationYear, pages, available); 
     }
 
     @Override
-    public Book createEBook(int id, String title, String author, double sizeMB, boolean available) {
-        return new EBook(id, title, author, sizeMB, available);
+    public Book createEBook(int id, String title, String author, String genre, int publicationYear, double sizeMB, boolean available) {
+        return new EBook(id, title, author, genre, publicationYear, sizeMB, available);
     }
 
     @Override
-    public Book createAudioBook(int id, String title, String author, double duration, boolean available) {
-        return new AudioBook(id, title, author, duration, available);
+    public Book createAudioBook(int id, String title, String author, String genre, int publicationYear, double duration, boolean available) {
+        return new AudioBook(id, title, author, genre, publicationYear, duration, available);
     }
 
     // Создание журналов

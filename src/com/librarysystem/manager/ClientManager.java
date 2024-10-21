@@ -49,4 +49,7 @@ public class ClientManager {
         System.out.println("Total clients count: " + clients.size());
         return clients.size();
     }
+    public Client getClientById(int clientId) {
+        return clients.get(clientId); 
+    }
 }
