@@ -24,11 +24,11 @@ public class ClientService {
         System.out.println("Client " + client.getName() + " has reserved a book.");
     }
 
-    // Метод для отмены резервирования клиентом
+  
     public void cancelReserve(int clientId) throws ClientNotFoundException {
-        // Найти клиента по его ID
+       
         Client client = clientManager.findClientById(clientId);
-        // Проверить, существует ли клиент
+        
         if (client == null) {
             throw new ClientNotFoundException("Client with ID " + clientId + " not found."); // Исключение, если клиент не найден
         }

@@ -8,6 +8,7 @@ import src.com.librarysystem.models.magazine.Magazine;
 import src.com.librarysystem.models.magazine.MonthlyMagazine;
 import src.com.librarysystem.models.magazine.WeeklyMagazine;
 
+
 public class LibraryFactory implements AbstractFactory {
     
     // Создание книг
@@ -29,7 +30,7 @@ public class LibraryFactory implements AbstractFactory {
     // Создание журналов
     @Override
     public Magazine createMonthlyMagazine(int id, String title, String editor, boolean available, int issueNumber) {
-        return new MonthlyMagazine(id, title, editor, available, issueNumber);
+        return new MonthlyMagazine(id, title,editor,available,issueNumber);
     }
 
     @Override
