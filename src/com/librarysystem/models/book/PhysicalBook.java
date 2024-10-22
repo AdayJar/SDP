@@ -1,16 +1,13 @@
 package src.com.librarysystem.models.book;
 
-import src.com.librarysystem.manager.BookManager;
-import src.com.librarysystem.state.BookContext;
-
+import src.com.librarysystem.manager.BookManager; // Import book manager interface
 
 public class PhysicalBook implements Book { // PhysicalBook implements the Book interface
     private int id; // Unique identifier for the book
     private String title; // Title of the book
     private String author; // Author of the book
     private int pages; // Number of pages in the book
-    private boolean available; // Availability status of the book\
-    private BookManager bookManager;
+    private boolean available; // Availability status of the book
 
     // Constructor for initializing PhysicalBook attributes
 
@@ -68,16 +65,8 @@ public class PhysicalBook implements Book { // PhysicalBook implements the Book 
     
 
     // Method to change the availability status of the book
-    @Override
     public void changeAvailability(boolean availability) {
         this.available = availability;
-    }
-
-
-    public void delete() {
-        // Здесь мы можем использовать контекст состояния для удаления
-        BookContext context = new BookContext();
-        context.delete(this, bookManager); // Удаляем книгу через состояние
     }
 
 }

@@ -1,8 +1,6 @@
 package src.com.librarysystem.models.book;
-import src.com.librarysystem.manager.BookManager;
-import src.com.librarysystem.state.AvailableState;
-import src.com.librarysystem.state.BookContext;
-import src.com.librarysystem.state.BookState;
+
+
 
 // The AudioBook class represents an audiobook in the library system, implementing the Book interface.
 public class AudioBook implements Book {
@@ -16,7 +14,6 @@ public class AudioBook implements Book {
     private final double duration; 
     // Availability status of the audiobook
     private boolean available;
-    private BookManager bookManager;
 
     // Constructor to initialize an AudioBook instance
 
@@ -26,7 +23,6 @@ public class AudioBook implements Book {
         this.author = author;
         this.duration = duration;
         this.available = available;
-      
     }
 
 
@@ -77,18 +73,8 @@ public class AudioBook implements Book {
     }
 
     // Reserves the audiobook, marking it as unavailable
-    @Override
     public void changeAvailability(boolean availability) {
         this.available = availability;
-    }
-
-   
-
-    @Override
-    public void delete() {
-        // Здесь мы можем использовать контекст состояния для удаления
-        BookContext context = new BookContext();
-        context.delete(this, bookManager); // Удаляем книгу через состояние
     }
    
 }

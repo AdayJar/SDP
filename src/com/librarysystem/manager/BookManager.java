@@ -3,8 +3,6 @@ package src.com.librarysystem.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import src.com.librarysystem.iterator.BookIterator;
-import src.com.librarysystem.iterator.Iterator;
 import src.com.librarysystem.models.book.Book;
 
 // The BookManager class is responsible for managing the collection of books in the library system.
@@ -54,9 +52,5 @@ public class BookManager {
     public void removeBook(int id) {
         books.removeIf(book -> book.getId() == id); // Remove book if the ID matches
         System.out.println("Book with ID " + id + " has been removed.");
-    }
-
-    public Iterator<Book> createIterator() {
-        return new BookIterator(this);
     }
 }

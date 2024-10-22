@@ -1,16 +1,11 @@
 package src.com.librarysystem.models.magazine;
 
-import src.com.librarysystem.observer.Observer;
-import java.util.ArrayList;
-import java.util.List;
-
 public class WeeklyMagazine implements Magazine {
     private int id;
     private String title;
     private String editor;
     private boolean available;
     private String weekOfPublication;
-    private List<Observer> observers = new ArrayList<>(); // Список для хранения наблюдателей
 
     public WeeklyMagazine(int id, String title, String editor, boolean available, String weekOfPublication) {
         this.id = id;
@@ -41,33 +36,23 @@ public class WeeklyMagazine implements Magazine {
     }
 
     @Override
-    public String showInfo() {
-        return "ID: " + id + ", Title: " + title + ", Editor: " + editor + ", Available: " + available + ", Issue Number: " + weekOfPublication;
-    }
-
-    @Override
-    public void changeAvailability(boolean availability) {
-        this.available = availability;
-        notifyObservers(); // Уведомляем наблюдателей, когда меняется доступность
-    }
-
-    // Подписка на наблюдателя
-    @Override
-    public void subscribe(Observer observer) {
-        observers.add(observer);
-    }
-
-    // Отписка от наблюдателя
-    @Override
-    public void unsubscribe(Observer observer) {
-        observers.remove(observer);
-    }
-
-    // Уведомление всех наблюдателей
-    @Override
-    public void notifyObservers() {
-        for (Observer observer : observers) {
-            observer.update(this);
+    public void reserve() {
+        if (available) {
+            available = false;
+            System.out.println("The magazine " + title + " has been reserved.");
+        } else {
+            System.out.println("The magazine " + title + " is not available for reservation.");
         }
+    }
+
+    @Override
+    public void cancelReservation() {
+        available = true;
+        System.out.println("Reservation for the magazine " + title + " has been canceled.");
+    }
+
+    @Override
+    public String showInfo() {
+        return "ID: " + id + ", Title: " + title + ", Editor: " + editor + ", Available: " + available + ", Week of Publication: " + weekOfPublication;
     }
 }

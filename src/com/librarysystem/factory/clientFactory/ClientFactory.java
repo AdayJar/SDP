@@ -1,8 +1,8 @@
 package src.com.librarysystem.factory.clientFactory;
 
-import src.com.librarysystem.models.clients.Client;
-import src.com.librarysystem.models.clients.PremiumClient;
-import src.com.librarysystem.models.clients.RegularClient;
+import src.com.librarysystem.clients.Client;
+import src.com.librarysystem.clients.RegularClient;
+import src.com.librarysystem.clients.PremiumClient;
 
 public class ClientFactory {
     public static Client createRegularClient(int id, String name, String email) {

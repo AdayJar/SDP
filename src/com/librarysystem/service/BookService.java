@@ -37,4 +37,12 @@ public class BookService {
         // Change the availability status of the book
         book.changeAvailability(availability);
     }
+
+    public void reserveBook(int id) {
+
+    }
+
+    public void cancelReservation(int id) {
+        
+    }
 }

@@ -1,4 +1,4 @@
-package src.com.librarysystem.models.clients;
+package src.com.librarysystem.clients;
 
 public class RegularClient implements Client {
     private final int id;
@@ -24,11 +24,6 @@ public class RegularClient implements Client {
     @Override
     public String getEmail() {
         return email;
-    }
-
-    @Override
-    public void update(String message) {
-        System.out.println("Уведомление для регулярного клиента " + name + ": " + message);
     }
 
     @Override
