@@ -12,10 +12,13 @@ import src.com.librarysystem.models.book.Book;
 import src.com.librarysystem.models.clients.Client;
 import src.com.librarysystem.models.magazine.Magazine;
 import src.com.librarysystem.service.BookService;
-import src.com.librarysystem.service.ClientService;
+
 import src.com.librarysystem.service.MagazineService;
 import src.com.librarysystem.report.Report;
 import src.com.librarysystem.state.BookContext;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.Iterator;
 
@@ -26,7 +29,7 @@ public class Main {
         BookManager bookManager = new BookManager();
         ClientManager clientManager = new ClientManager();
         BookService bookService = new BookService(bookManager);
-        ClientService clientService = new ClientService(clientManager);
+    
         MagazineManager magazineManager=new MagazineManager();
         MagazineService magazineServie=new MagazineService(magazineManager);
 
@@ -34,13 +37,13 @@ public class Main {
         AbstractFactory libraryFactory = new LibraryFactory();
 
         // Create and add books
-        Book physicalBook = libraryFactory.createPhysicalBook(1, "Physical Book Title", "Author A", 300, true);
+        Book physicalBook = libraryFactory.createPhysicalBook(1, "Gokaem Algoritm", "Author A", 300, true,"https://klex.ru/1718");
         bookManager.add(physicalBook);
 
-        Book eBook = libraryFactory.createEBook(2, "E-Book Title", "Author B", 1.5, true);
+        Book eBook = libraryFactory.createEBook(2, "10 Niger", "Author B", 1.5, true,"https://flibusta.su/book/701-desyat-negrityat/");
         bookManager.add(eBook);
 
-        Book audioBook = libraryFactory.createAudioBook(3, "AudioBook Title", "Author C", 5.0, true);
+        Book audioBook = libraryFactory.createAudioBook(3, "AudioBook Title", "Author C", 5.0, true,"https://flibusta.su/book/701-desyat-negrityat/");
         bookManager.add(audioBook);
 
         // Create magazines
@@ -88,25 +91,7 @@ public class Main {
         System.out.println(monthlyReport); // Show report
 
         // Check book availability and manage reservations
-        try {
-            boolean isAvailable = bookService.isBookAvailable(1);
-            System.out.println("Physical Book Available: " + isAvailable);
-
-            clientService.reserve(1); // Reserve book
-            System.out.println("Physical Book reserved successfully.");
-
-            isAvailable = bookService.isBookAvailable(1);
-            System.out.println("Physical Book Available after reservation: " + isAvailable);
-
-            clientService.cancelReserve(1); // Cancel reservation
-            System.out.println("Reservation for Physical Book cancelled.");
-
-            isAvailable = bookService.isBookAvailable(1);
-            System.out.println("Physical Book Available after cancellation: " + isAvailable);
-        } catch (BookNotFoundException | ClientNotFoundException e) {
-            System.out.println(e.getMessage()); // Handle exceptions
-        }
-
+     
         // Change book availability
         try {
             bookService.changeAvailability(1, false); // Change book availability
@@ -114,6 +99,14 @@ public class Main {
         } catch (BookNotFoundException e) {
             System.out.println(e.getMessage());
         }
+       try {
+          bookService.openBook(1);
+       } catch (BookNotFoundException e) {
+          System.out.println(e.getMessage());
+       } catch (IOException | URISyntaxException e) {
+         System.out.println("Не удалось открыть ссылку: " + e.getMessage());
+       }
+
 
         // Delete book
         BookContext bookContext = new BookContext();
@@ -123,6 +116,9 @@ public class Main {
         } catch (Exception e) {
             System.out.println("Failed to delete the book: " + e.getMessage());
         }
+
+       
+      
 
         // Output remaining books in the system
         System.out.println("\nRemaining books in the system:");

@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import src.com.librarysystem.iterator.BookIterator;
-import src.com.librarysystem.iterator.ClientIterator;
 import src.com.librarysystem.iterator.Iterator;
 import src.com.librarysystem.models.book.Book;
-import src.com.librarysystem.models.clients.Client;
 
 public class BookManager implements CollectionManager<Book> {
     private List<Book> books = new ArrayList<>(); // Массив книг
@@ -46,7 +44,7 @@ public class BookManager implements CollectionManager<Book> {
 
     @Override
     public Iterator<Book> iterator() {
-    return new BookIterator(this); // Возвращаем новый итератор
+    return new BookIterator(this); 
 }
 
 

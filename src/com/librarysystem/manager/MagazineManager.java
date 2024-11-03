@@ -3,14 +3,12 @@ package src.com.librarysystem.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import src.com.librarysystem.iterator.ClientIterator;
 import src.com.librarysystem.iterator.Iterator;
 import src.com.librarysystem.iterator.MagazineIterator;
-import src.com.librarysystem.models.clients.Client;
 import src.com.librarysystem.models.magazine.Magazine;
 
 public class MagazineManager implements CollectionManager<Magazine> {
-    private List<Magazine> magazines = new ArrayList<>(); // Массив журналов
+    private List<Magazine> magazines = new ArrayList<>(); 
 
     @Override
     public void add(Magazine magazine) {

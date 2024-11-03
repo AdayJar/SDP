@@ -9,24 +9,26 @@ public class PhysicalBook implements Book { // PhysicalBook implements the Book 
     private String title; // Title of the book
     private String author; // Author of the book
     private int pages; // Number of pages in the book
-    private boolean available; // Availability status of the book\
+    private boolean available;
+    private final String url; // Availability status of the book\
     private BookManager bookManager;
 
     // Constructor for initializing PhysicalBook attributes
 
-    public PhysicalBook(int id, String title, String author, int pages, boolean available) {
+    public PhysicalBook(int id, String title, String author, int pages, boolean available,String url) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.pages = pages;
         this.available = available;
+        this.url=url;
     }
 
 
     // Method to create a clone of the PhysicalBook
     @Override
     public Book clone() {
-        return new PhysicalBook(id, title, author, pages, available); // Return a new instance with the same attributes
+        return new PhysicalBook(id, title, author, pages, available,url); // Return a new instance with the same attributes
     }
 
     // Getter for book ID
@@ -78,6 +80,10 @@ public class PhysicalBook implements Book { // PhysicalBook implements the Book 
         // Здесь мы можем использовать контекст состояния для удаления
         BookContext context = new BookContext();
         context.delete(this, bookManager); // Удаляем книгу через состояние
+    }
+    @Override
+    public String getUrl() {
+        return url;
     }
 
 }

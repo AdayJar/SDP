@@ -8,21 +8,23 @@ public class EBook implements Book { // EBook implements the Book interface
     private String title; // Title of the eBook
     private String author; // Author of the eBook
     private double sizeMB; // Size of the eBook in megabytes
-    private boolean available; // Availability status of the eBook
+    private boolean available;
+    private final String url; // Availability status of the eBook
     private BookManager bookManager;
     // Constructor to initialize eBook attributes
-    public EBook(int id, String title, String author, double sizeMB, boolean available) {
+    public EBook(int id, String title, String author, double sizeMB, boolean available, String url) {
         this.id = id; // Set the unique ID
         this.title = title; // Set the title
         this.author = author; // Set the author
         this.sizeMB = sizeMB; // Set the size in MB
         this.available = available; // Set the availability status
+        this.url=url;
     }
 
     // Method to create a clone of the EBook
     @Override
     public Book clone() {
-        return new EBook(id, title, author, sizeMB, available); // Return a new instance with the same attributes
+        return new EBook(id, title, author, sizeMB, available,url); // Return a new instance with the same attributes
     }
 
     // Getter for eBook ID
@@ -70,5 +72,10 @@ public class EBook implements Book { // EBook implements the Book interface
     @Override
     public void changeAvailability(boolean availability) {
         this.available = availability;
+    }
+
+    @Override
+    public String getUrl() {
+        return url;
     }
 }

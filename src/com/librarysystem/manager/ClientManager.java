@@ -8,7 +8,7 @@ import src.com.librarysystem.iterator.Iterator;
 import src.com.librarysystem.models.clients.Client;
 
 public class ClientManager implements CollectionManager<Client> {
-    private List<Client> clients = new ArrayList<>(); // Массив клиентов
+    private List<Client> clients = new ArrayList<>(); 
 
     @Override
     public void add(Client client) {
