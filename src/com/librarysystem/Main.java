@@ -1,13 +1,5 @@
 package src.com.librarysystem;
 
-<<<<<<< HEAD
-import src.com.librarysystem.manager.BookManager;
-import src.com.librarysystem.service.BookService;
-import src.com.librarysystem.service.LoggingBookService;
-import src.com.librarysystem.exceptions.BookNotFoundException;
-import java.io.IOException;
-import java.net.URISyntaxException;
-=======
 
 import src.com.librarysystem.models.clients.Client;
 import src.com.librarysystem.command.AddReviewCommand;
@@ -15,18 +7,17 @@ import src.com.librarysystem.command.Command;
 import src.com.librarysystem.command.RemoveReviewCommand;
 import src.com.librarysystem.exceptions.BookNotFoundException;
 import src.com.librarysystem.exceptions.ClientNotFoundException;
+import src.com.librarysystem.facade.LibraryFacade;
 import src.com.librarysystem.factory.bookabstractfactory.*;
 import src.com.librarysystem.factory.clientFactory.ClientFactory;
 import src.com.librarysystem.manager.BookManager;
 import src.com.librarysystem.manager.ClientManager;
 import src.com.librarysystem.manager.HistoryManager;
-import src.com.librarysystem.manager.MagazineManager;
 import src.com.librarysystem.manager.ReviewManager;
 import src.com.librarysystem.models.book.Book;
 import src.com.librarysystem.models.magazine.Magazine;
 import src.com.librarysystem.service.BookService;
 import src.com.librarysystem.service.ClientService;
-import src.com.librarysystem.service.MagazineService;
 import src.com.librarysystem.report.Report;
 import src.com.librarysystem.state.BookContext;
 import src.com.librarysystem.strategy.AuthorSearchStrategy;
@@ -38,59 +29,40 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
->>>>>>> ab3e312fac2b915cd01137c757cb5feeb51cfaa7
 
 public class Main {
     public static void main(String[] args) {
-        // Создание экземпляра BookManager
+        
+        // Initialize managers and services
         BookManager bookManager = new BookManager();
-<<<<<<< HEAD
-=======
         ClientManager clientManager = new ClientManager();
         BookService bookService = new BookService(bookManager);
         ClientService clientService = new ClientService(clientManager);
     
-        MagazineManager magazineManager=new MagazineManager();
-        MagazineService magazineServie=new MagazineService(magazineManager);
->>>>>>> ab3e312fac2b915cd01137c757cb5feeb51cfaa7
 
-        // Добавление книг
-        bookManager.addBook("The Silent Patient", "Alex Michaelides", "EBook", 1.5, "https://klex.ru/1718");
-        bookManager.addBook("Becoming", "Michelle Obama", "AudioBook", 11.0, "http://example.com/becoming");
-        bookManager.addBook("The Great Gatsby", "F. Scott Fitzgerald", "PhysicalBook", 180, "http://example.com/gatsby");
+        LibraryFacade libraryFacade = new LibraryFacade();
 
-<<<<<<< HEAD
-        // Показать все книги
-        System.out.println("\nСписок всех книг:");
-        bookManager.showAll();
+        // Create a factory for library objects
+        AbstractFactory libraryFactory = new LibraryFactory();
 
-        // Найти книгу по ID
-        int searchId = 1; // Пример ID для поиска
-        System.out.println("\nПоиск книги с ID " + searchId + ":");
-        var foundBook = bookManager.findById(searchId);
-        if (foundBook != null) {
-            System.out.println("Найдена книга: " + foundBook.showInfo());
-        } else {
-            System.out.println("Книга с ID " + searchId + " не найдена.");
-=======
         // Create and add books
         Book physicalBook = libraryFactory.createPhysicalBook(1, "1984", "George Orwell", "Dystopian", 1949, 328, true, "https://klex.ru/1718");
-        bookManager.add(physicalBook);
+        libraryFacade.addBook(physicalBook);
 
         Book physicalBook2 = libraryFactory.createPhysicalBook(2, "To Kill a Mockingbird", "Harper Lee", "Fiction", 1960, 281, true, "https://www.imdb.com/title/tt0056592/");
-        bookManager.add(physicalBook2); 
+        libraryFacade.addBook(physicalBook2); 
 
         Book eBook = libraryFactory.createEBook(3, "The Great Gatsby", "F. Scott Fitzgerald", "Classic", 1925, 1.5, true, "https://flibusta.su/book/701-desyat-negrityat/");
-        bookManager.add(eBook);
+        libraryFacade.addBook(eBook);
 
         Book audioBook = libraryFactory.createAudioBook(4, "The Catcher in the Rye", "J.D. Salinger", "Fiction", 1951, 10.0, true, "https://flibusta.su/book/701-desyat-negrityat/");
-        bookManager.add(audioBook);
+        libraryFacade.addBook(audioBook);
 
         // Create magazines
         Magazine monthlyMagazine = libraryFactory.createMonthlyMagazine(5, "Monthly Magazine Title", "Editor A", true, 10);
         Magazine weeklyMagazine = libraryFactory.createWeeklyMagazine(6, "Weekly Magazine Title", "Editor B", true, "Week 40");
-        magazineManager.add(monthlyMagazine);
-        magazineManager.add(weeklyMagazine);
+        libraryFacade.addMagazine(monthlyMagazine);
+        libraryFacade.addMagazine(weeklyMagazine);
 
         // Output book information
 
@@ -100,29 +72,12 @@ public class Main {
         while (bookIterator.hasNext()) {
             Book book = bookIterator.next();
             System.out.println(book.showInfo()); // Show book info
->>>>>>> ab3e312fac2b915cd01137c757cb5feeb51cfaa7
         }
 
-        // Удалить книгу по ID
-        int removeId = 1; // Пример ID для удаления
-        bookManager.remove(removeId);
-        
-        // Показать обновленный список книг
-        System.out.println("\nОбновленный список книг:");
-        bookManager.showAll();
+        // Output magazine information
+        System.out.println(monthlyMagazine.showInfo());
+        System.out.println(weeklyMagazine.showInfo());
 
-<<<<<<< HEAD
-        // Создание экземпляра BookService
-        BookService bookService = new BookService(bookManager);
-        // Оборачивание BookService в LoggingBookService
-        LoggingBookService loggingBookService = new LoggingBookService(bookService);
-
-        // Проверка доступности книги
-        try {
-            int checkId = 2; // Пример ID для проверки доступности
-            boolean isAvailable = loggingBookService.isBookAvailable(checkId);
-            System.out.println("\nКнига с ID " + checkId + " доступна: " + isAvailable);
-=======
 
         // Create clients
         Client regularClient = ClientFactory.createRegularClient(1, "Akhmetova Dilyara", "akhmetova_dilyara@gmail.com");
@@ -131,14 +86,14 @@ public class Main {
 
 
         // Add clients to manager
-        clientManager.add(regularClient);
-        clientManager.add(premiumClient1);
-        clientManager.add(premiumClient2);
+        libraryFacade.addClient(regularClient);
+        libraryFacade.addClient(premiumClient1);
+        libraryFacade.addClient(premiumClient2);
 
         // Output client information
         System.out.println("\n=============================\n");
        
-        clientManager.getTotal();
+        libraryFacade.getTotalClients();
 
         System.out.println("\n=============================\n");
         System.out.println(regularClient);
@@ -193,44 +148,35 @@ public class Main {
 
             isAvailable = bookService.isBookAvailable(1);
             System.out.println("Physical Book Available after cancellation: " + isAvailable);
->>>>>>> ab3e312fac2b915cd01137c757cb5feeb51cfaa7
         } catch (BookNotFoundException e) {
             System.out.println(e.getMessage());
         }
+       try {
+          bookService.openBook(1);
+       } catch (BookNotFoundException e) {
+          System.out.println(e.getMessage());
+       } catch (IOException | URISyntaxException e) {
+         System.out.println("Не удалось открыть ссылку: " + e.getMessage());
+       }
 
-        // Изменение доступности книги
+
+        // Delete book
+        BookContext bookContext = new BookContext();
         try {
-            int changeId = 2; // Пример ID для изменения доступности
-            loggingBookService.changeAvailability(changeId, false);
-            System.out.println("Доступность книги с ID " + changeId + " изменена.");
-        } catch (BookNotFoundException e) {
-            System.out.println(e.getMessage());
+            bookContext.delete(physicalBook, bookManager); // Delete book
+            System.out.println("Physical Book removed.");
+        } catch (Exception e) {
+            System.out.println("Failed to delete the book: " + e.getMessage());
         }
 
-<<<<<<< HEAD
-        try {
-            int checkId = 2; // Пример ID для проверки доступности
-            boolean isAvailable = loggingBookService.isBookAvailable(checkId);
-            System.out.println("\nКнига с ID " + checkId + " доступна: " + isAvailable);
-        } catch (BookNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-
-        // Открытие книги по URL
-        try {
-            int openId = 2; // Пример ID для открытия книги
-            loggingBookService.openBook(openId);
-        } catch (BookNotFoundException | IOException | URISyntaxException e) {
-            System.out.println(e.getMessage());
-=======
     
         // Output remaining books in the system
         System.out.println("\nRemaining books in the system:");
-        int totalBooks = bookManager.getTotal();
+        int totalBooks = libraryFacade.getTotalBooks();
         System.out.println("Total count: " + totalBooks);
 
         System.out.println("Remaining books:");
-        bookIterator = bookManager.getItems().iterator();
+        bookIterator = libraryFacade.getBooks().iterator();
         while (bookIterator.hasNext()) {
             Book book = bookIterator.next();
             System.out.println(book.showInfo()); // Show remaining books info
@@ -239,12 +185,12 @@ public class Main {
         System.out.println("\n=============================\n");
 
 
-        int totalMagazine = magazineManager.getTotal();
+        int totalMagazine = libraryFacade.getTotalMagazines();
         System.out.println("Total count: " + totalMagazine);
 
         System.out.println("Remaining magazines:");
 
-        Iterator<Magazine> magazineIterator = magazineManager.getItems().iterator();
+        Iterator<Magazine> magazineIterator = libraryFacade.getMagazines().iterator();
         while (magazineIterator.hasNext()) {
             Magazine magazine = magazineIterator.next();
             System.out.println(magazine.showInfo()); // Show remaining books info
@@ -253,17 +199,16 @@ public class Main {
         System.out.println("\n=============================\n");
         
 
-        int totalClients = clientManager.getTotal();
+        int totalClients = libraryFacade.getTotalClients();
         System.out.println("Total count: " + totalClients);
 
         System.out.println("Remaining clients:");
 
 
-        Iterator<Client> clientIterator = clientManager.getItems().iterator();
+        Iterator<Client> clientIterator = libraryFacade.getClients().iterator();
         while (clientIterator.hasNext()) {
             Client client = clientIterator.next();
             System.out.println(client.showInfo()); 
->>>>>>> ab3e312fac2b915cd01137c757cb5feeb51cfaa7
         }
         
         // Review system
