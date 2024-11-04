@@ -1,7 +1,4 @@
 package src.com.librarysystem.service;
-<<<<<<< HEAD
-public class ClientService{}
-=======
 
 import src.com.librarysystem.exceptions.ClientNotFoundException;
 import src.com.librarysystem.manager.BookManager;
@@ -50,4 +47,3 @@ public class ClientService {
         System.out.println("Client " + client.getName() + " has canceled the reservation for book ID " + bookId + ".");
     }
 }
->>>>>>> ab3e312fac2b915cd01137c757cb5feeb51cfaa7
