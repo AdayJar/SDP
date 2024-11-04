@@ -1,10 +1,6 @@
 package src.com.librarysystem.models.magazine;
 
 
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class WeeklyMagazine implements Magazine {
     private int id;
     private String title;
