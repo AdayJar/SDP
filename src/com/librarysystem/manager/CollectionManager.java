@@ -13,3 +13,4 @@ public interface CollectionManager<T> {
     void showAll(); 
     Iterator<T> iterator();
 }
+
