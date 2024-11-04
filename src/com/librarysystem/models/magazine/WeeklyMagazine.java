@@ -2,8 +2,7 @@ package src.com.librarysystem.models.magazine;
 
 
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class WeeklyMagazine implements Magazine {
     private int id;
@@ -11,14 +10,17 @@ public class WeeklyMagazine implements Magazine {
     private String editor;
     private boolean available;
     private String weekOfPublication;
+    private final String url; 
+
 
    
-    public WeeklyMagazine(int id, String title, String editor, boolean available, String weekOfPublication) {
+    public WeeklyMagazine(int id, String title, String editor, boolean available, String weekOfPublication,String url) {
         this.id = id;
         this.title = title;
         this.editor = editor;
         this.available = available;
         this.weekOfPublication = weekOfPublication;
+        this.url=url;
      
     }
 
@@ -54,6 +56,11 @@ public class WeeklyMagazine implements Magazine {
     public void changeAvailability(boolean availability) {
         this.available = availability;
       
+    }
+
+    @Override
+    public String getUrl() {
+        return url;
     }
 
   
