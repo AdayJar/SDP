@@ -9,6 +9,13 @@
             "name": "Main",
             "request": "launch",
             "mainClass": "src.com.librarysystem.Main",
+            "projectName": "project_7f431b2f"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "src.com.librarysystem.Main",
             "projectName": "SDP_62d13e3a"
         }
     ]

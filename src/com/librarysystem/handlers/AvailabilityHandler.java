@@ -15,11 +15,11 @@ public class AvailabilityHandler implements Handler {
 
     @Override
     public void handleRequest(Client client, int bookId) {
-        Book book = BookManager.getInstance().findBookById(bookId);
+        Book book = BookManager.findById(bookId);
 
         if (book != null && book.isAvailable()) {
             System.out.println("Book " + book.getTitle() + " is available.");
-            ClientManager.getInstance().addReservation(client.getId());
+            ClientManager.addReservation(client.getId());
             book.changeAvailability(false);  
             System.out.println("Book " + book.getTitle() + " has been reserved by " + client.getName() + ".");
         } else {
