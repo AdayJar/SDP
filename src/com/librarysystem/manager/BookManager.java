@@ -6,9 +6,11 @@ import java.util.List;
 import src.com.librarysystem.iterator.BookIterator;
 import src.com.librarysystem.iterator.Iterator;
 import src.com.librarysystem.models.book.Book;
+import src.com.librarysystem.strategy.SearchStrategy;
 
 public class BookManager implements CollectionManager<Book> {
     private List<Book> books = new ArrayList<>(); // Массив книг
+    private SearchStrategy searchStrategy;
 
     @Override
     public void add(Book book) {
@@ -45,8 +47,13 @@ public class BookManager implements CollectionManager<Book> {
     @Override
     public Iterator<Book> iterator() {
     return new BookIterator(this); 
-}
+    }
 
+    public void setSearchStrategy(SearchStrategy searchStrategy) {
+        this.searchStrategy = searchStrategy; 
+    }
 
-    
+    public List<Integer> searchBooks(String criteria) {
+        return searchStrategy.search(books, criteria);
+    }
 }

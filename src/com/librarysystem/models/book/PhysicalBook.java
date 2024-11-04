@@ -4,42 +4,39 @@ import src.com.librarysystem.manager.BookManager;
 import src.com.librarysystem.state.BookContext;
 
 
-public class PhysicalBook implements Book { // PhysicalBook implements the Book interface
-    private int id; // Unique identifier for the book
-    private String title; // Title of the book
-    private String author; // Author of the book
-    private int pages; // Number of pages in the book
+public class PhysicalBook implements Book { 
+    private int id; 
+    private String title; 
+    private String author;
+    private int pages; 
     private boolean available;
-    private final String url; // Availability status of the book\
+    private final String url; 
     private BookManager bookManager;
+    private String genre; 
+    private int publicationYear; 
 
     // Constructor for initializing PhysicalBook attributes
 
-    public PhysicalBook(int id, String title, String author, int pages, boolean available,String url) {
+    public PhysicalBook(int id, String title, String author, String genre, int publicationYear, int pages, boolean available, String url) {
         this.id = id;
         this.title = title;
         this.author = author;
+        this.genre = genre; 
+        this.publicationYear = publicationYear;
         this.pages = pages;
         this.available = available;
-        this.url=url;
+        this.url = url;
     }
 
-
-    // Method to create a clone of the PhysicalBook
     @Override
     public Book clone() {
-        return new PhysicalBook(id, title, author, pages, available,url); // Return a new instance with the same attributes
+        return new PhysicalBook(id, title, author, genre, publicationYear, pages, available, url); 
     }
-
-    // Getter for book ID
 
     @Override
     public int getId() {
         return id;
     }
-
-
-    // Getter for book title
 
     @Override
     public String getTitle() {
@@ -51,22 +48,16 @@ public class PhysicalBook implements Book { // PhysicalBook implements the Book 
         return author;
     }
 
-
     @Override
     public boolean isAvailable() {
         return available;
     }
 
-
-   
-    // Method to show book information
     @Override
     public String showInfo() {
         return "Physical Book ID: " + id + ", Title: " + title + ", Author: " + author + ", Pages: " + pages +
-                ", Available: " + available;
-    }
-
-    // Method to reserve the book
+                ", Genre: " + genre + ", Year: " + publicationYear + ", Available: " + available;
+    }  
     
 
     // Method to change the availability status of the book
@@ -75,15 +66,22 @@ public class PhysicalBook implements Book { // PhysicalBook implements the Book 
         this.available = availability;
     }
 
-
     public void delete() {
-        // Здесь мы можем использовать контекст состояния для удаления
         BookContext context = new BookContext();
-        context.delete(this, bookManager); // Удаляем книгу через состояние
+        context.delete(this, bookManager); 
     }
     @Override
     public String getUrl() {
         return url;
     }
 
+    @Override
+    public String getGenre() {
+        return genre;
+    }
+
+    @Override
+    public int getPublicationYear() {
+        return publicationYear;
+    }
 }

@@ -40,7 +40,7 @@ public class PremiumClient implements Client {
     public void update(String message) {
         System.out.println("Уведомление для премиум-клиента " + name + ": " + message);
     }
-
+    
     @Override
     public String toString() {
         return "PremiumClient{" +

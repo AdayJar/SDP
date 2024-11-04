@@ -1,14 +1,17 @@
 package src.com.librarysystem.manager;
 
+
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Map;
+import java.util.HashMap;
+import src.com.librarysystem.models.clients.Client;
 import src.com.librarysystem.iterator.ClientIterator;
 import src.com.librarysystem.iterator.Iterator;
-import src.com.librarysystem.models.clients.Client;
 
 public class ClientManager implements CollectionManager<Client> {
     private List<Client> clients = new ArrayList<>(); 
+    private Map<Integer, Integer> clientReservations = new HashMap<>();
 
     @Override
     public void add(Client client) {
@@ -44,6 +47,15 @@ public class ClientManager implements CollectionManager<Client> {
     @Override
     public Iterator<Client> iterator() {
     return new ClientIterator(this); 
-}
+    }
 
+    public int getClientReservations(int clientId) {
+        return clientReservations.getOrDefault(clientId, 0);
+    }
+    public void addReservation(int clientId) {
+        clientReservations.put(clientId, getClientReservations(clientId) + 1);
+    }
+    public void deleteReservation(int clientId) {
+        clientReservations.put(clientId, getClientReservations(clientId) - 1);
+    }
 }
