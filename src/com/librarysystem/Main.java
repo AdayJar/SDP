@@ -7,18 +7,17 @@ import src.com.librarysystem.command.Command;
 import src.com.librarysystem.command.RemoveReviewCommand;
 import src.com.librarysystem.exceptions.BookNotFoundException;
 import src.com.librarysystem.exceptions.ClientNotFoundException;
+import src.com.librarysystem.facade.LibraryFacade;
 import src.com.librarysystem.factory.bookabstractfactory.*;
 import src.com.librarysystem.factory.clientFactory.ClientFactory;
 import src.com.librarysystem.manager.BookManager;
 import src.com.librarysystem.manager.ClientManager;
 import src.com.librarysystem.manager.HistoryManager;
-import src.com.librarysystem.manager.MagazineManager;
 import src.com.librarysystem.manager.ReviewManager;
 import src.com.librarysystem.models.book.Book;
 import src.com.librarysystem.models.magazine.Magazine;
 import src.com.librarysystem.service.BookService;
 import src.com.librarysystem.service.ClientService;
-import src.com.librarysystem.service.MagazineService;
 import src.com.librarysystem.report.Report;
 import src.com.librarysystem.state.BookContext;
 import src.com.librarysystem.strategy.AuthorSearchStrategy;
@@ -40,30 +39,30 @@ public class Main {
         BookService bookService = new BookService(bookManager);
         ClientService clientService = new ClientService(clientManager);
     
-        MagazineManager magazineManager=new MagazineManager();
-        MagazineService magazineServie=new MagazineService(magazineManager);
+
+        LibraryFacade libraryFacade = new LibraryFacade();
 
         // Create a factory for library objects
         AbstractFactory libraryFactory = new LibraryFactory();
 
         // Create and add books
         Book physicalBook = libraryFactory.createPhysicalBook(1, "1984", "George Orwell", "Dystopian", 1949, 328, true, "https://klex.ru/1718");
-        bookManager.add(physicalBook);
+        libraryFacade.addBook(physicalBook);
 
         Book physicalBook2 = libraryFactory.createPhysicalBook(2, "To Kill a Mockingbird", "Harper Lee", "Fiction", 1960, 281, true, "https://www.imdb.com/title/tt0056592/");
-        bookManager.add(physicalBook2); 
+        libraryFacade.addBook(physicalBook2); 
 
         Book eBook = libraryFactory.createEBook(3, "The Great Gatsby", "F. Scott Fitzgerald", "Classic", 1925, 1.5, true, "https://flibusta.su/book/701-desyat-negrityat/");
-        bookManager.add(eBook);
+        libraryFacade.addBook(eBook);
 
         Book audioBook = libraryFactory.createAudioBook(4, "The Catcher in the Rye", "J.D. Salinger", "Fiction", 1951, 10.0, true, "https://flibusta.su/book/701-desyat-negrityat/");
-        bookManager.add(audioBook);
+        libraryFacade.addBook(audioBook);
 
         // Create magazines
         Magazine monthlyMagazine = libraryFactory.createMonthlyMagazine(5, "Monthly Magazine Title", "Editor A", true, 10);
         Magazine weeklyMagazine = libraryFactory.createWeeklyMagazine(6, "Weekly Magazine Title", "Editor B", true, "Week 40");
-        magazineManager.add(monthlyMagazine);
-        magazineManager.add(weeklyMagazine);
+        libraryFacade.addMagazine(monthlyMagazine);
+        libraryFacade.addMagazine(weeklyMagazine);
 
         // Output book information
 
@@ -87,14 +86,14 @@ public class Main {
 
 
         // Add clients to manager
-        clientManager.add(regularClient);
-        clientManager.add(premiumClient1);
-        clientManager.add(premiumClient2);
+        libraryFacade.addClient(regularClient);
+        libraryFacade.addClient(premiumClient1);
+        libraryFacade.addClient(premiumClient2);
 
         // Output client information
         System.out.println("\n=============================\n");
        
-        clientManager.getTotal();
+        libraryFacade.getTotalClients();
 
         System.out.println("\n=============================\n");
         System.out.println(regularClient);
@@ -173,11 +172,11 @@ public class Main {
     
         // Output remaining books in the system
         System.out.println("\nRemaining books in the system:");
-        int totalBooks = bookManager.getTotal();
+        int totalBooks = libraryFacade.getTotalBooks();
         System.out.println("Total count: " + totalBooks);
 
         System.out.println("Remaining books:");
-        bookIterator = bookManager.getItems().iterator();
+        bookIterator = libraryFacade.getBooks().iterator();
         while (bookIterator.hasNext()) {
             Book book = bookIterator.next();
             System.out.println(book.showInfo()); // Show remaining books info
@@ -186,12 +185,12 @@ public class Main {
         System.out.println("\n=============================\n");
 
 
-        int totalMagazine = magazineManager.getTotal();
+        int totalMagazine = libraryFacade.getTotalMagazines();
         System.out.println("Total count: " + totalMagazine);
 
         System.out.println("Remaining magazines:");
 
-        Iterator<Magazine> magazineIterator = magazineManager.getItems().iterator();
+        Iterator<Magazine> magazineIterator = libraryFacade.getMagazines().iterator();
         while (magazineIterator.hasNext()) {
             Magazine magazine = magazineIterator.next();
             System.out.println(magazine.showInfo()); // Show remaining books info
@@ -200,13 +199,13 @@ public class Main {
         System.out.println("\n=============================\n");
         
 
-        int totalClients = clientManager.getTotal();
+        int totalClients = libraryFacade.getTotalClients();
         System.out.println("Total count: " + totalClients);
 
         System.out.println("Remaining clients:");
 
 
-        Iterator<Client> clientIterator = clientManager.getItems().iterator();
+        Iterator<Client> clientIterator = libraryFacade.getClients().iterator();
         while (clientIterator.hasNext()) {
             Client client = clientIterator.next();
             System.out.println(client.showInfo()); 
