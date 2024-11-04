@@ -1,65 +1,60 @@
 package src.com.librarysystem.models.book;
 
+
 import src.com.librarysystem.manager.BookManager;
 import src.com.librarysystem.state.BookContext;
 
-public class EBook implements Book { // EBook implements the Book interface
-    private int id; // Unique identifier for the eBook
-    private String title; // Title of the eBook
-    private String author; // Author of the eBook
-    private double sizeMB; // Size of the eBook in megabytes
+public class EBook implements Book { 
+    private int id;
+    private String title;
+    private String author;
+    private double sizeMB; 
     private boolean available;
-    private final String url; // Availability status of the eBook
+    private final String url; 
+    private String genre; 
+    private int publicationYear; 
     private BookManager bookManager;
-    // Constructor to initialize eBook attributes
-    public EBook(int id, String title, String author, double sizeMB, boolean available, String url) {
-        this.id = id; // Set the unique ID
-        this.title = title; // Set the title
-        this.author = author; // Set the author
-        this.sizeMB = sizeMB; // Set the size in MB
-        this.available = available; // Set the availability status
-        this.url=url;
+
+    public EBook(int id, String title, String author, String genre, int publicationYear, double sizeMB, boolean available, String url) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+        this.publicationYear = publicationYear;
+        this.available = available;
+        this.url = url;
     }
 
-    // Method to create a clone of the EBook
     @Override
     public Book clone() {
-        return new EBook(id, title, author, sizeMB, available,url); // Return a new instance with the same attributes
+        return new EBook(id, title, author, genre, publicationYear, sizeMB, available, url); // Return a new instance with the same attributes
     }
 
-    // Getter for eBook ID
     @Override
     public int getId() {
-        return id; // Return the unique ID
+        return id; 
     }
 
-    // Getter for eBook title
     @Override
     public String getTitle() {
-        return title; // Return the title
+        return title; 
     }
 
-    // Getter for eBook author
     @Override
     public String getAuthor() {
-        return author; // Return the author
+        return author; 
     }
 
-    // Method to check if the eBook is available
     @Override
     public boolean isAvailable() {
-        return available; // Return the availability status
+        return available; 
     }
 
-    // Method to show eBook information
     @Override
     public String showInfo() {
         return "E-Book ID: " + id + ", Title: " + title + ", Author: " + author + ", Size (MB): " + sizeMB +
-                ", Available: " + available; // Return formatted information about the eBook
+                ", Genre: " + genre + ", Year: " + publicationYear + ", Available: " + available; 
     }
-
-    // Method to reserve the eBook
-   
 
     // Method to change the availability status of the eBook
     public void delete() {
@@ -67,7 +62,7 @@ public class EBook implements Book { // EBook implements the Book interface
         BookContext context = new BookContext();
         context.delete(this, bookManager); // Удаляем книгу через состояние
     }
-
+    
     // Method to change the availability status of the book
     @Override
     public void changeAvailability(boolean availability) {
@@ -77,5 +72,12 @@ public class EBook implements Book { // EBook implements the Book interface
     @Override
     public String getUrl() {
         return url;
+    }
+    public String getGenre() {
+        return genre;
+    }
+
+    public int getPublicationYear() {
+        return publicationYear;
     }
 }

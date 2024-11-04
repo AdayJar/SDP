@@ -6,12 +6,12 @@ import java.util.List;
 import src.com.librarysystem.iterator.BookIterator;
 import src.com.librarysystem.iterator.Iterator;
 import src.com.librarysystem.models.book.Book;
+import src.com.librarysystem.strategy.SearchStrategy;
 
 public class BookManager {
     private final List<Book> books = new ArrayList<>();
     private final BookFactory bookFactory = new BookFactory();
-    
-    
+    private SearchStrategy searchStrategy;
     public void add(Book book) {
         books.add(book);
         System.out.println("Book added: " + book.showInfo());
@@ -54,5 +54,19 @@ public class BookManager {
     
     public Iterator<Book> iterator() {
         return new BookIterator(this); 
+
     }
+
+    public void setSearchStrategy(SearchStrategy searchStrategy) {
+        this.searchStrategy = searchStrategy; 
+    }
+
+    public List<Integer> searchBooks(String criteria) {
+        return searchStrategy.search(books, criteria);
+
+    }
+    
+    
+
+
 }

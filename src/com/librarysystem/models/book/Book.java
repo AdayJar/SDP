@@ -9,7 +9,7 @@ public interface Book {
     void changeAvailability(boolean availability);
     void delete();
     Book clone();
-
-    // Новый метод для получения URL книги
     String getUrl();
+    String getGenre(); 
+    int getPublicationYear();
 }

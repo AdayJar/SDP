@@ -9,22 +9,23 @@ import src.com.librarysystem.models.magazine.MonthlyMagazine;
 import src.com.librarysystem.models.magazine.WeeklyMagazine;
 
 
+
 public class LibraryFactory implements AbstractFactory {
     
     // Создание книг
     @Override
-    public Book createPhysicalBook(int id, String title, String author, int pages, boolean available,String url) {
-        return new PhysicalBook(id, title, author, pages, available,url);
+    public Book createPhysicalBook(int id, String title, String author, String genre, int publicationYear, int pages, boolean available, String url) {
+        return new PhysicalBook(id, title, author, genre, publicationYear, pages, available, url);
     }
 
     @Override
-    public Book createEBook(int id, String title, String author, double sizeMB, boolean available,String url) {
-        return new EBook(id, title, author, sizeMB, available,url);
+    public Book createEBook(int id, String title, String author, String genre, int publicationYear, double sizeMB, boolean available, String url) {
+        return new EBook(id, title, author, genre, publicationYear, sizeMB, available, url);
     }
 
     @Override
-    public Book createAudioBook(int id, String title, String author, double duration, boolean available,String url) {
-        return new AudioBook(id, title, author, duration, available,url);
+    public Book createAudioBook(int id, String title, String author, String genre, int publicationYear, double duration, boolean available, String url) {
+        return new AudioBook(id, title, author, genre, publicationYear, duration, available, url);
     }
 
     // Создание журналов

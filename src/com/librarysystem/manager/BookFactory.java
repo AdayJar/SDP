@@ -21,13 +21,13 @@ public class BookFactory {
             // Создаем экземпляр книги в зависимости от типа
             switch (type) {
                 case "AudioBook":
-                    newBook = new AudioBook(booksCache.size() + 1, title, author, param, true, url);
+                    newBook = new AudioBook(booksCache.size() + 1, title, author, key, 0, param, true, url);
                     break;
                 case "EBook":
-                    newBook = new EBook(booksCache.size() + 1, title, author, param, true, url);
+                    newBook = new EBook(booksCache.size() + 1, title, author, key, 0, param, true, url);
                     break;
                 case "PhysicalBook":
-                    newBook = new PhysicalBook(booksCache.size() + 1, title, author, (int) param, true, url);
+                    newBook = new PhysicalBook(booksCache.size() + 1, title, author, key, (int) param, 0, true, url);
                     break;
                 default:
                     throw new IllegalArgumentException("Invalid book type: " + type);

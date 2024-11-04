@@ -1,5 +1,6 @@
 package src.com.librarysystem.models.book;
 
+
 import src.com.librarysystem.manager.BookManager;
 import src.com.librarysystem.state.BookContext;
 
@@ -8,14 +9,19 @@ public class AudioBook implements Book {
     private final String title;
     private final String author;
     private final double duration;
+    private String genre; 
+    private int publicationYear; 
     private boolean available;
     private final String url; // URL для аудиокниги
     private BookManager bookManager;
 
-    public AudioBook(int id, String title, String author, double duration, boolean available, String url) {
+
+    public AudioBook(int id, String title, String author, String genre, int publicationYear, double duration, boolean available, String url) {
         this.id = id;
         this.title = title;
         this.author = author;
+        this.genre = genre;
+        this.publicationYear = publicationYear;
         this.duration = duration;
         this.available = available;
         this.url = url;
@@ -23,7 +29,7 @@ public class AudioBook implements Book {
 
     @Override
     public Book clone() {
-        return new AudioBook(id, title, author, duration, available, url);
+        return new AudioBook(id, title, author, genre, publicationYear, duration, available, url);
     }
 
     @Override
@@ -49,7 +55,7 @@ public class AudioBook implements Book {
     @Override
     public String showInfo() {
         return "Audio Book ID: " + id + ", Title: " + title + ", Author: " + author + ", Duration: " + duration +
-                " hours, Available: " + available;
+                " hours, Genre: " + genre + ", Year: " + publicationYear + ", Available: " + available;
     }
 
     @Override
@@ -67,5 +73,13 @@ public class AudioBook implements Book {
     @Override
     public String getUrl() {
         return url;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public int getPublicationYear() {
+        return publicationYear;
     }
 }
