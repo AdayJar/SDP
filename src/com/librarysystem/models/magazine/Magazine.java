@@ -7,7 +7,9 @@ public interface Magazine {
     String getTitle();
     String getEditor(); 
     boolean isAvailable();
-    String showInfo(); 
+    String showInfo();
+    String getUrl();
+ 
     void changeAvailability(boolean availability);
 }
 

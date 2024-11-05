@@ -112,4 +112,5 @@ public class LibraryFacade {
     public src.com.librarysystem.iterator.Iterator<Magazine> magazineIterator() {
         return magazineManager.iterator();
     }
+
 }

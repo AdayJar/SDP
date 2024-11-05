@@ -10,6 +10,6 @@ public interface AbstractFactory {
     Book createAudioBook(int id, String title, String author, String genre, int publicationYear, double duration, boolean available, String url);
     
     // Методы для создания журналов
-    Magazine createMonthlyMagazine(int id, String title, String editor, boolean available, int issueNumber);
-    Magazine createWeeklyMagazine(int id, String title, String editor, boolean available, String weekOfPublication);
+    Magazine createMonthlyMagazine(int id, String title, String editor, boolean available, int issueNumber, String url);
+    Magazine createWeeklyMagazine(int id, String title, String editor, boolean available, String weekOfPublication, String url);
 }

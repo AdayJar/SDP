@@ -28,12 +28,12 @@ public class LibraryFactory implements AbstractFactory {
 
     // Создание журналов
     @Override
-    public Magazine createMonthlyMagazine(int id, String title, String editor, boolean available, int issueNumber) {
-        return new MonthlyMagazine(id, title, editor, available, issueNumber);
+    public Magazine createMonthlyMagazine(int id, String title, String editor, boolean available, int issueNumber, String url) {
+        return new MonthlyMagazine(id, title,editor,available,issueNumber,url);
     }
 
     @Override
-    public Magazine createWeeklyMagazine(int id, String title, String editor, boolean available, String weekOfPublication) {
-        return new WeeklyMagazine(id, title, editor, available, weekOfPublication);
+    public Magazine createWeeklyMagazine(int id, String title, String editor, boolean available, String weekOfPublication, String url) {
+        return new WeeklyMagazine(id, title, editor, available, weekOfPublication, url);
     }
 }

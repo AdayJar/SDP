@@ -1,32 +1,45 @@
 package src.com.librarysystem.service;
 
-import src.com.librarysystem.exceptions.MagazineNotFoundException; // Импорт исключения для случая, когда журнал не найден
-import src.com.librarysystem.manager.MagazineManager; // Импорт менеджера журналов
-import src.com.librarysystem.models.magazine.Magazine; // Импорт модели журнала
+import src.com.librarysystem.exceptions.MagazineNotFoundException;
+import src.com.librarysystem.models.magazine.Magazine;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class MagazineService {
-    private final MagazineManager magazineManager; // Менеджер для обработки журналов
+    private final MagazineProvider magazineProvider;
 
-    // Конструктор для инициализации MagazineManager
-    public MagazineService(MagazineManager magazineManager) {
-        this.magazineManager = magazineManager;
+    public MagazineService(MagazineProvider magazineProvider) {
+        this.magazineProvider = magazineProvider;
     }
 
-    // Метод для проверки доступности журнала по ID
     public boolean isMagazineAvailable(int id) throws MagazineNotFoundException {
-        Magazine magazine = magazineManager.findById(id);
-        if (magazine == null) {
-            throw new MagazineNotFoundException("Magazine with ID " + id + " not found."); // Выбрасываем исключение, если журнал не найден
+        if (!magazineProvider.isMagazineAvailable(id)) {
+            throw new MagazineNotFoundException("Magazine with ID " + id + " not found or not available.");
         }
-        return magazine.isAvailable(); // Возвращаем доступность журнала
+        return true;
     }
 
-    // Метод для изменения доступности журнала по ID
     public void changeMagazineAvailability(int id, boolean availability) throws MagazineNotFoundException {
-        Magazine magazine = magazineManager.findById(id);
+        Magazine magazine = magazineProvider.findById(id);
         if (magazine == null) {
-            throw new MagazineNotFoundException("Magazine with ID " + id + " not found."); // Выбрасываем исключение, если журнал не найден
+            throw new MagazineNotFoundException("Magazine with ID " + id + " not found.");
         }
-        magazine.changeAvailability(availability); // Изменяем статус доступности журнала
+        magazineProvider.changeAvailability(id, availability);
+    }
+
+    public void openMagazine(int id) throws MagazineNotFoundException, IOException, URISyntaxException {
+        Magazine magazine = magazineProvider.findById(id);
+        if (magazine == null) {
+            throw new MagazineNotFoundException("Magazine with ID " + id + " not found.");
+        }
+
+        if (Desktop.isDesktopSupported()) {
+            Desktop desktop = Desktop.getDesktop();
+            desktop.browse(new URI(magazine.getUrl()));
+        } else {
+            System.out.println("Desktop не поддерживается на данной платформе.");
+        }
     }
 }

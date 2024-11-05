@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public class BookService {
+public class BookService implements IBookService {
     private final BookManager bookManager;
 
 
@@ -18,6 +18,7 @@ public class BookService {
         this.bookManager = bookManager;
     }
 
+    @Override
     public boolean isBookAvailable(int id) throws BookNotFoundException {
         Book book = bookManager.findById(id);
         if (book == null) {
@@ -26,6 +27,7 @@ public class BookService {
         return book.isAvailable();
     }
 
+    @Override
     public void changeAvailability(int id, boolean availability) throws BookNotFoundException {
         Book book = bookManager.findById(id);
         if (book == null) {
@@ -34,7 +36,7 @@ public class BookService {
         book.changeAvailability(availability);
     }
 
-    // Метод для открытия книги сразу в браузере
+    @Override
     public void openBook(int id) throws BookNotFoundException, IOException, URISyntaxException {
         Book book = bookManager.findById(id);
         if (book == null) {

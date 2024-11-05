@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Main1",
+            "request": "launch",
+            "mainClass": "src.com.librarysystem.Main1",
+            "projectName": "project_7f431b2f"
+        },
+        {
+            "type": "java",
             "name": "Main",
             "request": "launch",
             "mainClass": "src.com.librarysystem.Main",

@@ -1,5 +1,7 @@
 package src.com.librarysystem.models.clients;
 
+import src.com.librarysystem.models.users.UserRole;
+
 public class RegularClient implements Client {
     private final int id;
     private final String name;
@@ -36,6 +38,11 @@ public class RegularClient implements Client {
         System.out.println("Уведомление для регулярного клиента " + name + ": " + message);
     }
 
+    @Override
+    public UserRole getRole() { 
+        return UserRole.REGULAR_CLIENT;
+    }
+    
     @Override
     public String toString() {
         return "RegularClient{" +

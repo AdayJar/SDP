@@ -1,5 +1,7 @@
 package src.com.librarysystem.models.clients;
 
+import src.com.librarysystem.models.users.UserRole;
+
 public class PremiumClient implements Client {
     private final int id;
     private final String name;
@@ -39,6 +41,11 @@ public class PremiumClient implements Client {
     @Override
     public void update(String message) {
         System.out.println("Уведомление для премиум-клиента " + name + ": " + message);
+    }
+
+    @Override
+    public UserRole getRole() {
+        return UserRole.PREMIUM_CLIENT;
     }
     
     @Override
